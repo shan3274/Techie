@@ -43,7 +43,7 @@ const Approvemodal = ({ closeModal, user }) => {
             <div className="">{user?.application}</div>
           </div>
         </div>
-        {user.approve == "false" && (
+        {user?.approve == "false" && (
           <div className="absolute bottom-0 w-[100%] h-[10%] flex items-center justify-center gap-5">
             <select
               onChange={(e) => setApprove(e.target.value)}
