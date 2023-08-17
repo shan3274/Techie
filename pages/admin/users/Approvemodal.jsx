@@ -17,7 +17,7 @@ const Approvemodal = ({ closeModal, user }) => {
           X
         </div>
         <div className="w-[100%] h-[10%] flex items-center justify-center absolute top-10 text-[30px] font-[500]">
-          {user.fullName}
+          {user?.fullName}
         </div>
         <div className="w-[70%] h-[100%] flex items-center justify-center text-[17px]">
           <div className="w-[30%] h-[80%] flex flex-col justify-center gap-5">
@@ -32,15 +32,15 @@ const Approvemodal = ({ closeModal, user }) => {
             <div className="">Application</div>
           </div>
           <div className="w-[30%] h-[80%] flex flex-col justify-center text-gray-600 gap-5">
-            <div className="">{user.userName}</div>
-            <div className="">{user.id}</div>
-            <div className="">{user.email}</div>
-            <div className="">{user.companyName}</div>
-            <div className="">{user.gstin}</div>
-            <div className="">{user.address}</div>
-            <div className="">{user.industryType}</div>
-            <div className="">{user.nature}</div>
-            <div className="">{user.application}</div>
+            <div className="">{user?.userName}</div>
+            <div className="">{user?.id}</div>
+            <div className="">{user?.email}</div>
+            <div className="">{user?.companyName}</div>
+            <div className="">{user?.gstin}</div>
+            <div className="">{user?.address}</div>
+            <div className="">{user?.industryType}</div>
+            <div className="">{user?.nature}</div>
+            <div className="">{user?.application}</div>
           </div>
         </div>
         {user.approve == "false" && (
