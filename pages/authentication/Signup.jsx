@@ -1,6 +1,6 @@
 import Footer from "@/src/Homepage/Footer";
 import Header from "@/src/Homepage/Header";
-import { db } from "@/src/Homepage/utils/firebase-config";
+import { db } from "@/src/utils/firebase-config";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -85,7 +85,8 @@ const Signup = () => {
           route.push("/authentication/Successful");
         });
       } catch (error) {
-        console.log(error.message);
+        let err = error.message.split("/");
+        alert(err[1]);
       }
     }
   };

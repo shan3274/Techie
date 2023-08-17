@@ -1,4 +1,4 @@
-import { db } from "@/src/Homepage/utils/firebase-config";
+import { db } from "@/src/utils/firebase-config";
 import { addDoc, collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useState } from "react";

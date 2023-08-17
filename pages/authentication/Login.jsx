@@ -1,6 +1,6 @@
 import Footer from "@/src/Homepage/Footer";
 import Header from "@/src/Homepage/Header";
-import { auth } from "@/src/Homepage/utils/firebase-config";
+import { auth } from "@/src/utils/firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -84,13 +84,13 @@ const Login = () => {
                 await signInWithEmailAndPassword(auth, userName, password).then(
                   () => {
                     localStorage.setItem("userEmail", userName);
-                    localStorage.setItem("userPassword", password);
-                    alert("login success");
+                    
                     route.push("/");
                   }
                 );
               } catch (error) {
-                alert(error.message);
+                let err = error.message.split("/");
+                alert(err[1]);
               }
             }}
           >

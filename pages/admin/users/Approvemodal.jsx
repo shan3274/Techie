@@ -1,4 +1,4 @@
-import { auth, db } from "@/src/Homepage/utils/firebase-config";
+import { auth, db } from "@/src/utils/firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState, useEffect } from "react";

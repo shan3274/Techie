@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import Header from "./Header";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/src/Homepage/utils/firebase-config";
+import { db } from "@/src/utils/firebase-config";
 import Approvemodal from "./users/Approvemodal";
 
 const Account = () => {

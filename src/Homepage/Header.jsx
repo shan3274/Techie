@@ -7,7 +7,9 @@ import { duration } from "@mui/material";
 
 import * as icon from "react-icons/bi";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "./utils/firebase-config";
+import { db } from "../utils/firebase-config";
+import Userdash from "@/pages/authentication/Userdash";
+import { useRouter } from "next/router";
 const Header = () => {
   const [placeholder, setPlaceholder] = useState(true);
   const [search, setSearch] = useState("");
@@ -15,6 +17,13 @@ const Header = () => {
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState([]);
   const [userEmail, setUserEmail] = useState("");
+
+  // navigation
+
+  const route = useRouter();
+
+  // modal state
+  const [userModal, setUserModal] = useState(false);
 
   const [isUserLogin, setUserLogin] = useState(false);
 
@@ -29,18 +38,25 @@ const Header = () => {
   };
 
   useEffect(() => {
+    userCall();
+  }, []);
+  useEffect(() => {
+    let localemail;
+    if (typeof window !== "undefined") {
+      localemail = window.localStorage.getItem("userEmail");
+      setUserEmail(localemail);
+    }
     if (localStorage.getItem("userEmail")) {
       setUserLogin(true);
-      userCall();
-      let email = localStorage.getItem("userEmail");
       user.map((data) => {
-        if (email === data.email) {
-          console.log("done");
+        if (localemail === data.email) {
+          setUserName(data.fullName);
+          localStorage.setItem("sellerType", data.industryType);
+          localStorage.setItem("userName", data.userName);
         }
-        console.log(email);
       });
     }
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -68,7 +84,7 @@ const Header = () => {
           )}
           <div className="w-[100%] min-h-[50px]  flex items-center justify-center text-blue-950">
             <p className="w-[80%] h-[100%] flex items-center justify-start gap-5 text-[25x] font-[700]">
-              <icon.BiUserCircle className="text-[30px]" /> Hello User
+              <icon.BiUserCircle className="text-[30px]" /> Hello {userName}
             </p>
           </div>
           {/* tranding */}
@@ -210,9 +226,16 @@ const Header = () => {
           </div>
           <div className="w-[30%] h-[100%] flex gap-5 items-center justify-center">
             {isUserLogin ? (
-              <div className="">
-                <icon.BiSolidUserCircle />
-              </div>
+              <>
+                <div className="">{userName}</div>
+                <div className=" text-[30px] cursor-pointer">
+                  <icon.BiSolidUserCircle
+                    onClick={() => {
+                      setUserModal(!userModal);
+                    }}
+                  />
+                </div>
+              </>
             ) : (
               <>
                 <Link href="/authentication/Login">Login</Link>
@@ -255,6 +278,29 @@ const Header = () => {
           )}
           <div className="w-[50px] h-[40%] bg-blue-950 ml-1 rounded-md absolute right-[25%] text-white flex items-center justify-center text-[25px] cursor-pointer">
             <BiSearch />
+          </div>
+        </div>
+      </div>
+      {/* user profile */}
+      <div
+        className={`fixed right-[-300px] top-0 w-[300px] h-screen bg-white z-[10005] boreder rounded-l-lg drop-shadow-lg duration-300  ${
+          userModal && "right-[0px]"
+        }`}
+      >
+        <div className="w-[100%] h-[100%] relative flex items-center justify-center">
+          <div className="absolute top-10 text-[20px] font-[500] text-gray-600">
+            {userName}
+          </div>
+          <div className="absolute bottom-10">
+            <button
+              className="w-[100px] h-[40px] bg-black rounded-lg text-white drop-shadow-md"
+              onClick={() => {
+                localStorage.removeItem("userEmail");
+                window.location.reload(true);
+              }}
+            >
+              Logut
+            </button>
           </div>
         </div>
       </div>
