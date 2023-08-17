@@ -67,7 +67,7 @@ const Account = () => {
           <div className="w-[70%] min-h-[30%] grid grid-cols-4 gap-4 mt-[10%]">
             {/* display users */}
             {user.map((data) => {
-              if (data.approve) {
+              if (data.approve == "true") {
                 return (
                   <div
                     className=" bg-white rounded-lg drop-shadow-xl border flex items-center justify-center h-[100px] cursor-pointer transition-[1s] hover:scale-[1.05]"
@@ -86,7 +86,7 @@ const Account = () => {
           <div className="w-[70%] min-h-[30%] grid grid-cols-4 gap-4 mt-[10%]">
             {/* display users */}
             {user.map((data) => {
-              if (!data.approve) {
+              if (data.approve == "false") {
                 return (
                   <div
                     className=" bg-white rounded-lg drop-shadow-xl border flex items-center justify-center h-[100px] cursor-pointer transition-[1s] hover:scale-[1.05]"

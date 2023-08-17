@@ -9,6 +9,7 @@ import { BallTriangle } from "react-loader-spinner";
 
 const Signup = () => {
   const [userHover, setUserHover] = useState(false);
+  const [nameHover, setNameHover] = useState(false);
   const [passwordHover, setPasswordHover] = useState(false);
   const [buttonHover, setButtonHover] = useState(false);
   const [emailHover, setEmailHover] = useState(false);
@@ -21,6 +22,7 @@ const Signup = () => {
   const [applicationHover, setApplicatioHovern] = useState(false);
 
   //   data state
+  const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,6 +68,7 @@ const Signup = () => {
     ) {
       try {
         const dataShow = {
+          fullName: fullName,
           email: email,
           userName: userName,
           password: password,
@@ -75,7 +78,7 @@ const Signup = () => {
           industryType: industryType,
           nature: nature,
           application: application,
-          approve: false,
+          approve: "false",
         };
         const res = addDoc(databaseRef, dataShow).then((re) => {
           alert("done");
@@ -122,6 +125,35 @@ const Signup = () => {
               <div className="relative top-[10%] text-[35px] font-[500] text-blue-950">
                 Sign up
               </div>
+
+              {/* Full name */}
+              <label
+                htmlFor=""
+                className={
+                  nameHover
+                    ? ` relative right-[23%] ] top-[12px] bg-white duration-300 text-blue-900`
+                    : "relative top-[33px]  right-[23%] text-gray-400 duration-300 z-[1000]"
+                }
+              >
+                Full name
+              </label>
+              <input
+                title="this is user Name field"
+                type="text"
+                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
+                  nameHover && "rounded-none"
+                }`}
+                value={fullName}
+                onMouseOver={() => {
+                  setNameHover(true);
+                }}
+                onMouseOut={() => {
+                  if (fullName == "") setNameHover(false);
+                }}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                }}
+              />
               {/* user name */}
               <label
                 htmlFor=""

@@ -1,6 +1,9 @@
 import Footer from "@/src/Homepage/Footer";
 import Header from "@/src/Homepage/Header";
+import { auth } from "@/src/Homepage/utils/firebase-config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { use, useState } from "react";
 
 const Login = () => {
@@ -10,6 +13,9 @@ const Login = () => {
   //   data state
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+
+  // navigation
+  const route = useRouter();
   return (
     <div className=" w-full min-h-screen">
       <Header />
@@ -73,6 +79,20 @@ const Login = () => {
           />
           <button
             className={`absolute bottom-[23%] w-[50%] bg-blue-950 text-white h-[40px] rounded-xl hover:rounded-sm duration-300 hover:scale-[1.05]`}
+            onClick={async () => {
+              try {
+                await signInWithEmailAndPassword(auth, userName, password).then(
+                  () => {
+                    localStorage.setItem("userEmail", userName);
+                    localStorage.setItem("userPassword", password);
+                    alert("login success");
+                    route.push("/");
+                  }
+                );
+              } catch (error) {
+                alert(error.message);
+              }
+            }}
           >
             Login
           </button>
@@ -80,9 +100,16 @@ const Login = () => {
             New User?{" "}
             <Link
               href="/authentication/Signup"
-              className="underline text-blue-500"
+              className="underline text-blue-500 mr-2"
             >
               Signup
+            </Link>
+            ||
+            <Link
+              href="/authentication/Passwordrest"
+              className="underline text-blue-500 ml-2"
+            >
+              forget password?
             </Link>
           </div>
         </div>

@@ -16,13 +16,14 @@ const index = () => {
   //   rounting
   const route = useRouter();
   //   database  opretion
-  const [path, setPath] = useState();
+
   const [data, setData] = useState([]);
 
   const login = async () => {
-    setPath(`admin/pXEyByEojw8Y4MuHnaa2/${userName}`);
     try {
-      await getDocs(collection(db, path)).then((response) => {
+      await getDocs(
+        collection(db, `admin/pXEyByEojw8Y4MuHnaa2/${userName}`)
+      ).then((response) => {
         setData(
           response.docs.map((data) => {
             return { ...data.data(), id: data.id };
