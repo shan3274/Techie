@@ -44,8 +44,9 @@ const Searchresult = () => {
                     href={{
                       pathname: "/buy/products/Productpage",
                       query: {
-                        name: "test",
-                        path: query.path + "/" + item.id,
+                        path: query.path,
+                        similarproduct: query.path,
+                        productId: item.id,
                       },
                     }}
                     className="w-[100%] h-[200px] flex items-center justify-around border-b"

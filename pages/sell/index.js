@@ -5,6 +5,7 @@ import { getDownloadURL, ref, getStorage, uploadBytes } from "firebase/storage";
 
 import { useState } from "react";
 import { db } from "@/src/utils/firebase-config";
+import { Dna } from "react-loader-spinner";
 
 const index = () => {
   const [type, setType] = useState("Machine");
@@ -19,6 +20,9 @@ const index = () => {
   const [sellerName, setSellerName] = useState("");
   const [sellerEmail, setSellerEmail] = useState("");
 
+  // loader
+  const [loader, setLoader] = useState(false);
+
   useEffect(() => {
     setCategory(localStorage.getItem("sellerType"));
     setSellerName(localStorage.getItem("userName"));
@@ -32,6 +36,7 @@ const index = () => {
 
   const sellfun = async () => {
     try {
+      setLoader(true);
       const storageRef = getStorage();
       let imageURLs = "";
       let documentURLs = "";
@@ -83,6 +88,7 @@ const index = () => {
         ),
         dataShow
       ).then(() => {
+        setLoader(false);
         alert("submitted");
         setProductCode("");
         setProductName("");
@@ -91,6 +97,7 @@ const index = () => {
         setDetailedSpecification("");
       });
     } catch (error) {
+      setLoader(false);
       console.log(error.message);
     }
   };
@@ -196,6 +203,11 @@ const index = () => {
           </button>
         </div>
       </div>
+      {loader && (
+        <div className="z-[10000] w-full h-screen absolute top-0 left-0  flex items-center justify-center">
+          <Dna />
+        </div>
+      )}
     </div>
   );
 };
