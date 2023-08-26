@@ -84,8 +84,7 @@ const Login = () => {
                 await signInWithEmailAndPassword(auth, userName, password).then(
                   () => {
                     localStorage.setItem("userEmail", userName);
-                    
-                    route.push("/");
+                    route.back();
                   }
                 );
               } catch (error) {

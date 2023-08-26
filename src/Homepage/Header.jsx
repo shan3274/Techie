@@ -10,6 +10,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../utils/firebase-config";
 import Userdash from "@/pages/authentication/Userdash";
 import { useRouter } from "next/router";
+import Assistant from "./Assistant";
 const Header = () => {
   const [placeholder, setPlaceholder] = useState(true);
   const [search, setSearch] = useState("");
@@ -61,14 +62,14 @@ const Header = () => {
   return (
     <>
       <div
-        className={` w-[100px] h-screen fixed top-0 z-[10001] ${
+        className={` w-0 h-screen fixed top-0 z-[10001] ${
           menuActive && "bg-[rgba(0,0,0,0.7)]"
         } ${menuActive && "w-full "} `}
       >
         <div
           className={`relative top-0 left-[-300px] w-[300px] flex flex-col ${
             menuActive && "left-[0px]"
-          } h-screen bg-white duration-300`}
+          } h-screen bg-white duration-300 rounded-r-lg border-l drop-shadow-lg`}
         >
           {!menuActive && (
             <CiMenuBurger
@@ -249,37 +250,41 @@ const Header = () => {
             )}
           </div>
         </div>
-        <div className="w-[100%] h-[50%] flex items-start justify-center relative">
-          <input
-            type="text"
-            className="w-[50%] h-[40%] border border-gray-500 rounded-md  pl-5"
-            value={search}
-            onMouseEnter={() => {
-              setPlaceholder(false);
-            }}
-            onMouseOut={() => {
-              if (search == "") {
-                setPlaceholder(true);
-              }
-            }}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          {placeholder && (
-            <div className="absolute left-[26.5%] top-2 text-gray-400">
-              {" "}
-              <Typewriter
-                options={{
-                  strings: ["Search anything", "Sarch anytime"],
-                  autoStart: true,
-                  loop: true,
-                }}
-              />
+        {userName != "" ? (
+          <div className="w-[100%] h-[50%] flex items-start justify-center relative">
+            <input
+              type="text"
+              className="w-[50%] h-[40%] border border-gray-500 rounded-md  pl-5"
+              value={search}
+              onMouseEnter={() => {
+                setPlaceholder(false);
+              }}
+              onMouseOut={() => {
+                if (search == "") {
+                  setPlaceholder(true);
+                }
+              }}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {placeholder && (
+              <div className="absolute left-[26.5%] top-2 text-gray-400">
+                {" "}
+                <Typewriter
+                  options={{
+                    strings: ["Search anything", "Sarch anytime"],
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              </div>
+            )}
+            <div className="w-[50px] h-[40%] bg-blue-950 ml-1 rounded-md absolute right-[25%] text-white flex items-center justify-center text-[25px] cursor-pointer">
+              <BiSearch />
             </div>
-          )}
-          <div className="w-[50px] h-[40%] bg-blue-950 ml-1 rounded-md absolute right-[25%] text-white flex items-center justify-center text-[25px] cursor-pointer">
-            <BiSearch />
           </div>
-        </div>
+        ) : (
+          <div className="w-[100%] h-[50%] flex items-start justify-center relative"></div>
+        )}
       </div>
       {/* user profile */}
       <div
@@ -296,6 +301,8 @@ const Header = () => {
               className="w-[100px] h-[40px] bg-black rounded-lg text-white drop-shadow-md"
               onClick={() => {
                 localStorage.removeItem("userEmail");
+                localStorage.removeItem("sellerType");
+                localStorage.removeItem("userName");
                 window.location.reload(true);
               }}
             >
@@ -304,6 +311,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <Assistant />
     </>
   );
 };

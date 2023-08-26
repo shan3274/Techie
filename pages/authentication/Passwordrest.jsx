@@ -1,4 +1,5 @@
-import { db } from "@/src/utils/firebase-config";
+import { auth, db } from "@/src/utils/firebase-config";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -48,11 +49,13 @@ const Passwordrest = () => {
         <button
           className="w-[30%] h-[40px] bg-green-500 rounded-lg text-white drop-shadow-md"
           onClick={async () => {
-            await addDoc(collection(db, "Passwordrequest"), {
-              userEmail: email,
-            }).then(() => {
-              route.push("/authentication/Successful");
-            });
+            try {
+              await sendPasswordResetEmail(auth, email).then(() => {
+                route.push("/authentication/Successful");
+              });
+            } catch (error) {
+              alert(error.message);
+            }
           }}
         >
           Request

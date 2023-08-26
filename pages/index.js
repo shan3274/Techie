@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Homepage from "@/src/Homepage/Homepage";
 import Loginhome from "@/src/Homepage/Loginhome";
 import { useEffect, useState } from "react";
@@ -13,6 +14,13 @@ export default function Home() {
   }, []);
   console.log(isUserLogin);
   return (
-    <div className="bg-white">{isUserLogin ? <Loginhome /> : <Homepage />}</div>
+    <>
+      <Head>
+        <title>Home</title>
+      </Head>
+      <div className="bg-white">
+        {isUserLogin ? <Loginhome /> : <Homepage />}
+      </div>
+    </>
   );
 }

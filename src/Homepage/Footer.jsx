@@ -10,11 +10,12 @@ import {
 } from "react-icons/ai";
 import Typewriter from "typewriter-effect";
 import { StyledEngineProvider } from "@mui/material";
+import Link from "next/link";
 const Footer = () => {
   return (
     <div className="w-full h-[70vh]  relative top-[158vh]  flex flex-col items-center justify-center text-blue-950">
       <div className="w-[100%] h-[15%] flex items-center justify-center ">
-        <div className="w-[100%] h-[100%] flex items-center justify-center p-3 text-center text-[15px] text-gray-500 border-b ">
+        <div className="w-[100%] h-[100%] flex items-center justify-center p-3 text-center text-[15px] text-gray-500 border-b relative gap-10">
           <Typewriter
             options={{
               strings: [
@@ -25,6 +26,12 @@ const Footer = () => {
               loop: true,
             }}
           />
+          <Link
+            href="/Disclaimer"
+            className="absolute bottom-[-2rem] text-blue-500 text-[20px]"
+          >
+            Disclaimer
+          </Link>
         </div>
       </div>
       <div className="w-[100%] h-[90%] flex ">

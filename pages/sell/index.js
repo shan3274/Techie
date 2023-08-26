@@ -94,6 +94,7 @@ const index = () => {
       console.log(error.message);
     }
   };
+
   return (
     <div className="">
       <div className="w-full  flex flex-col items-center justify-start">
@@ -117,7 +118,10 @@ const index = () => {
             Add Product
           </label>
           {/* image */}
-          <div className="w-[15%] h-[10%] flex items-center justify-center bg-yellow-300 rounded-lg drop-shadow-lg hover:scale-[1.03] transition-[1s] cursor-pointer">
+          <div
+            className="w-[15%] h-[10%] flex items-center justify-center bg-yellow-300 rounded-lg drop-shadow-lg hover:scale-[1.03] transition-[1s] cursor-pointer"
+            title="Add your Product Image"
+          >
             <label htmlFor="image">Image +</label>
             <input
               type="file"
@@ -129,7 +133,10 @@ const index = () => {
           </div>
           {/* Document */}
           <div className="w-[15%] h-[10%] relative">
-            <div className="w-[100%] h-[100%] mt-5 flex items-center justify-center bg-yellow-300 rounded-lg drop-shadow-lg hover:scale-[1.03] transition-[1s] cursor-pointer">
+            <div
+              className="w-[100%] h-[100%] mt-5 flex items-center justify-center bg-yellow-300 rounded-lg drop-shadow-lg hover:scale-[1.03] transition-[1s] cursor-pointer"
+              title="Add your Product Catalog"
+            >
               <label htmlFor="document">Catalog +</label>{" "}
               <input
                 type="file"
@@ -145,6 +152,7 @@ const index = () => {
           <input
             type="text"
             placeholder="Product Code"
+            title="Give your Product a unique code"
             value={productCode}
             onChange={(e) => setProductCode(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-10 border border-gray-400 text-black rounded-md"
@@ -152,6 +160,7 @@ const index = () => {
           <input
             type="text"
             placeholder="Product Name"
+            title="Add your Product Name"
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
@@ -159,12 +168,14 @@ const index = () => {
           <input
             type="text"
             placeholder="Typical Specification"
+            title="Technical discription for your product"
             value={TypicalSpecification}
             onChange={(e) => setTypicalSpecification(e.target.value)}
             className="w-[25%] h-[5%] pl-5 mt-5 border border-gray-400 text-black rounded-md"
           />
           <textarea
             placeholder="Detailed Specification"
+            title="Complete description about your product"
             value={DetailedSpecification}
             onChange={(e) => setDetailedSpecification(e.target.value)}
             className="w-[25%] h-[20%] pl-5 mt-5 border border-gray-400 text-black rounded-md resize-none"
@@ -179,6 +190,7 @@ const index = () => {
           <button
             className="w-[10%] h-[7%]  mt-10 bg-gray-400 rounded-lg shadow-lg text-white  drop-shadow-lg hover:scale-[1.03] transition-[1s]"
             onClick={sellfun}
+            title="click here to submit form"
           >
             SELL
           </button>
