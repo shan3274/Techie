@@ -1,13 +1,15 @@
-import React, { useEffect } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import React, { useEffect, useMemo } from "react";
+import { collection, addDoc, getDoc } from "firebase/firestore";
 
 import { getDownloadURL, ref, getStorage, uploadBytes } from "firebase/storage";
 
 import { useState } from "react";
 import { db } from "@/src/utils/firebase-config";
 import { Dna } from "react-loader-spinner";
+import { useRouter } from "next/router";
 
-const index = () => {
+const Addproducts = () => {
+  const { query } = useRouter();
   const [type, setType] = useState("Machine");
   const [category, setCategory] = useState("");
   const [productCode, setProductCode] = useState("");
@@ -72,13 +74,16 @@ const index = () => {
         imageUrls: downloadImageURLs,
         documentURLs: downloadDocumentURLs,
         firstapprove: approve,
-        category: category,
+        category: query.category,
         type: type,
-        sellerEmail: sellerEmail,
-        sellerName: sellerName,
+        sellerEmail: query.sellerEmail,
+        sellerName: query.sellerName,
       };
       await addDoc(
-        collection(db, `SellerProduct/hjSXho3U2Ictlf1XdAIu/${sellerEmail}`),
+        collection(
+          db,
+          `SellerProduct/hjSXho3U2Ictlf1XdAIu/${query.sellerEmail}`
+        ),
         dataShow
       );
       await addDoc(collection(db, `Products`), dataShow).then(() => {
@@ -95,6 +100,8 @@ const index = () => {
       console.log(error.message);
     }
   };
+
+  console.log(query.category, query.sellerEmail, query.sellerName);
 
   return (
     <div className="">
@@ -206,4 +213,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Addproducts;

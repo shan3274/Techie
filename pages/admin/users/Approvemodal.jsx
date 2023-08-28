@@ -1,11 +1,26 @@
 import { auth, db } from "@/src/utils/firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
-import React, { useState, useEffect } from "react";
+import { collection, getDocs, updateDoc } from "firebase/firestore";
+import Link from "next/link";
+import React, { useState, useMemo } from "react";
 
 const Approvemodal = ({ closeModal, user }) => {
   const [approve, setApprove] = useState(true);
-
+  const [userData, setUserData] = useState([]);
+  useMemo(async () => {
+    if (user) {
+      getDocs(
+        collection(db, `SellerProduct/hjSXho3U2Ictlf1XdAIu/${user.email}`)
+      ).then((response) => {
+        setUserData(
+          response.docs.map((data) => {
+            return { ...data.data(), id: data.id };
+          })
+        );
+      });
+    }
+  }, [user]);
+  console.log(userData?.length);
   return (
     <div className="w-full h-screen bg-transparent flex items-center justify-center absolute top-10">
       <div className="w-[70%] h-[80%] bg-white rounded-xl drop-shadow-xl border relative flex gap-5 items-center justify-center">
@@ -30,6 +45,11 @@ const Approvemodal = ({ closeModal, user }) => {
             <div className="">Industry Type</div>
             <div className="">Nature</div>
             <div className="">Application</div>
+            <div className="">
+              {user?.approve == "true" && (
+                <div className="">Number of products</div>
+              )}
+            </div>
           </div>
           <div className="w-[30%] h-[80%] flex flex-col justify-center text-gray-600 gap-5">
             <div className="">{user?.userName}</div>
@@ -41,9 +61,14 @@ const Approvemodal = ({ closeModal, user }) => {
             <div className="">{user?.industryType}</div>
             <div className="">{user?.nature}</div>
             <div className="">{user?.application}</div>
+            <div className="">
+              {user?.approve == "true" && (
+                <div className="">{userData?.length}</div>
+              )}
+            </div>
           </div>
         </div>
-        {user?.approve == "false" && (
+        {user?.approve == "false" ? (
           <div className="absolute bottom-0 w-[100%] h-[10%] flex items-center justify-center gap-5">
             <select
               onChange={(e) => setApprove(e.target.value)}
@@ -81,6 +106,20 @@ const Approvemodal = ({ closeModal, user }) => {
               submit
             </button>
           </div>
+        ) : (
+          <Link
+            href={{
+              pathname: "/admin/Addproducts",
+              query: {
+                category: user.industryType,
+                sellerName: user.userName,
+                sellerEmail: user.email,
+              },
+            }}
+            className="absolute bottom-5  w-[150px] h-[40px] bg-green-500 text-white flex items-center justify-center rounded-md"
+          >
+            Add product +
+          </Link>
         )}
       </div>
     </div>

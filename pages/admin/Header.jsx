@@ -78,7 +78,8 @@ const Homepage = () => {
             </h1>
             <Link href="/admin/Homepage">Product request</Link>
             <Link href="/admin/Account">Account request</Link>
-            <Link href="">Users</Link>
+            <Link href="/admin/addusers">Add users</Link>
+            <Link href="/admin/Users">Users</Link>
           </div>
         </div>
       </div>

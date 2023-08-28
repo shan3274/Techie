@@ -4,9 +4,9 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/src/utils/firebase-config";
 import Approvemodal from "./users/Approvemodal";
 
-const Account = () => {
+const Users = () => {
   // switching between approved and not approved account state
-  const [isApprovedUser, setIsApprovedUser] = useState(false);
+  const [isApprovedUser, setIsApprovedUser] = useState(true);
   // data base for users
   const [user, setUser] = useState([]);
 
@@ -32,17 +32,13 @@ const Account = () => {
       <div className="w-full h-screen flex  items-center justify-center">
         {/* Approve and not Approved lable */}
         <div className="w-full h-[10%] flex items-center justify-center gap-10 absolute top-[9%]">
-          <h1 className="text-[25px] font-[500] text-green-500">
-            Account request
-          </h1>
+          <h1 className="text-[25px] font-[500] text-green-500">Users</h1>
         </div>
-        {isApprovedUser ? (
-          <div className=""></div>
-        ) : (
+        {isApprovedUser && (
           <div className="w-[70%] min-h-[30%] grid grid-cols-4 gap-4 mt-[10%]">
             {/* display users */}
             {user.map((data) => {
-              if (data.approve == "false") {
+              if (data.approve == "true") {
                 return (
                   <div
                     className=" bg-white rounded-lg drop-shadow-xl border flex items-center justify-center h-[100px] cursor-pointer transition-[1s] hover:scale-[1.05]"
@@ -68,4 +64,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Users;
