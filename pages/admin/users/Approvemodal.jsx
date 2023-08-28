@@ -111,9 +111,9 @@ const Approvemodal = ({ closeModal, user }) => {
             href={{
               pathname: "/admin/Addproducts",
               query: {
-                category: user.industryType,
-                sellerName: user.userName,
-                sellerEmail: user.email,
+                category: user?.industryType,
+                sellerName: user?.userName,
+                sellerEmail: user?.email,
               },
             }}
             className="absolute bottom-5  w-[150px] h-[40px] bg-green-500 text-white flex items-center justify-center rounded-md"
