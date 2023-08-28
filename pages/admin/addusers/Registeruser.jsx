@@ -86,6 +86,7 @@ const Registeruser = () => {
             address: address,
             industryType: industryType,
             nature: nature,
+            userAddress: userAddress,
             approve: "true",
           };
           const res = addDoc(databaseRef, dataShow).then((re) => {

@@ -1,5 +1,7 @@
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../utils/firebase-config";
 
 const Search = ({ closeModal }) => {
   const items = require("../utils/DATA_FETCH.json");
@@ -11,18 +13,38 @@ const Search = ({ closeModal }) => {
   //       item.toLowerCase().includes(value.toLowerCase())
   //     );
   //   }, [items, value]);
-
+  const [result, setResults] = useState([]);
+  useMemo(async () => {
+    await getDocs(collection(db, "Products")).then((res) => {
+      setResults(
+        res.docs.map((item) => {
+          return { ...item.data(), id: item.id };
+        })
+      );
+    });
+  }, []);
   const [filterItem, setFilterItem] = useState([]);
+  const [filterItem2, setFilterItem2] = useState([]);
   const search = (value) => {
-    const results = items.filter((data) => {
+    let results = [];
+    let results2 = [];
+
+    results2 = items.filter((data) => {
       return data.name.toLowerCase().includes(value.toLowerCase());
     });
+
+    results = result?.filter((data) => {
+      return data?.productName?.toLowerCase().includes(value.toLowerCase());
+    });
+
     setFilterItem(results);
-    console.log("rendring");
+    setFilterItem2(results2);
+    console.log("rendring", results);
   };
   useMemo(() => {
     search(value);
   }, [value]);
+  console.log(filterItem.length, filterItem2.length);
 
   return (
     <div className="w-full h-screen flex items-center justify-center fixed top-0 backdrop-blur-[1px] z-[1000]">
@@ -39,7 +61,7 @@ const Search = ({ closeModal }) => {
         <div className="w-[100%] flex items-center justify-center">
           <input
             type="search"
-            className="w-[90%] h-[50px] mt-10 border-[.3px] border-black rounded-full px-10"
+            className="w-[90%] h-[50px] mt-10 border-[.3px] border-black rounded-full px-10 marker:"
             placeholder="Search..."
             onChange={(e) => setValue(e.target.value)}
           />
@@ -54,26 +76,59 @@ const Search = ({ closeModal }) => {
           </Link>
         </div>
         <div className="w-full">
-          {filterItem.map((res) => {
-            return (
-              <div className="">
-                {value && (
-                  <Link
-                    className="w-[100%] h-[40px] border-b-[.5px] border-black flex items-center justify-start pl-10  "
-                    href={{
-                      pathname: "/buy/Searchresult",
-                      query: { name: "test", path: res.path },
-                    }}
-                    onClick={() => closeModal(false)}
-                  >
-                    <p className="w-[100%] transition-[1s] hover:text-blue-500 hover:scale-[1.01]">
-                      {res.name}
-                    </p>
-                  </Link>
-                )}
-              </div>
-            );
-          })}
+          <div className="w-full">
+            {filterItem.map((res) => {
+              return (
+                <div className="">
+                  {value && (
+                    <Link
+                      className="w-[100%] h-[40px] border-b-[.5px] border-black flex items-center justify-start pl-10  "
+                      href={{
+                        pathname: "/buy/products/Productpage",
+                        query: {
+                          path: "Products",
+                          similarproduct: "Products",
+                          productId: res.id,
+                        },
+                      }}
+                      onClick={() => closeModal(false)}
+                    >
+                      <p className="w-[100%] transition-[1s] hover:text-blue-500 hover:scale-[1.01] flex items-center justify-around relative">
+                        <div className="absolute left-0">{res.productName}</div>
+                        <img
+                          src={res.imageUrls[0]}
+                          alt=""
+                          className="h-[30px] absolute right-10"
+                        />
+                      </p>
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div className="w-full">
+            {filterItem2.map((res) => {
+              return (
+                <div className="">
+                  {value && (
+                    <Link
+                      className="w-[100%] h-[40px] border-b-[.5px] border-black flex items-center justify-start pl-10  "
+                      href={{
+                        pathname: "/buy/Searchresult",
+                        query: { name: "test", path: res.path },
+                      }}
+                      onClick={() => closeModal(false)}
+                    >
+                      <p className="w-[100%] transition-[1s] hover:text-blue-500 hover:scale-[1.01]">
+                        {res.name}
+                      </p>
+                    </Link>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

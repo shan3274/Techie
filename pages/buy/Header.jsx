@@ -3,9 +3,37 @@ import Head from "next/head";
 import style from "../../styles/productmain.module.css";
 import Link from "next/link";
 import Search from "@/src/Homepage/Search";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [
+      {
+        params: {
+          name: "next.js",
+        },
+      }, // See the "paths" section below
+    ],
+    fallback: true, // false or "blocking"
+  };
+};
+
 const Header = () => {
   const [searchModal, setSearchModal] = useState(false);
+
+  // const [products, setProducts] = useState([]);
+  // useMemo(async () => {
+  //   await getDocs(collection(db, "Products")).then((response) => {
+  //     setProducts(
+  //       response.docs.map((data) => {
+  //         return { ...data.data(), id: data.id };
+  //       })
+  //     );
+  //   });
+  // }, []);
+
+  // console.log(products);
   return (
     <>
       <Head>
@@ -44,14 +72,14 @@ const Header = () => {
             </li>
           </ul>
           <div className={style.icons}>
-            <a href="#">
+            <button>
               <i
                 class="ri-search-line"
                 onClick={() => {
                   setSearchModal(true);
                 }}
               ></i>
-            </a>
+            </button>
             <a href="#">
               <i class="ri-user-line"></i>
             </a>

@@ -244,7 +244,7 @@ const Header = () => {
                   href="/authentication/Signup"
                   className="py-1 px-6 text-orange-500 bg-white border border-white  rounded-md"
                 >
-                  Singup
+                  Sign up
                 </Link>
               </>
             )}
