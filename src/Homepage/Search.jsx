@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../utils/firebase-config";
+// import { collection, getDocs } from "firebase/firestore";
+// import { db } from "../utils/firebase-config";
 
-const Search = ({ closeModal }) => {
+const Search = ({ result, closeModal }) => {
   const items = require("../utils/DATA_FETCH.json");
 
   const [value, setValue] = useState("");
@@ -13,16 +13,16 @@ const Search = ({ closeModal }) => {
   //       item.toLowerCase().includes(value.toLowerCase())
   //     );
   //   }, [items, value]);
-  const [result, setResults] = useState([]);
-  useMemo(async () => {
-    await getDocs(collection(db, "Products")).then((res) => {
-      setResults(
-        res.docs.map((item) => {
-          return { ...item.data(), id: item.id };
-        })
-      );
-    });
-  }, []);
+  // const [result, setResults] = useState([]);
+  // useMemo(async () => {
+  //   await getDocs(collection(db, "Products")).then((res) => {
+  //     setResults(
+  //       res.docs.map((item) => {
+  //         return { ...item.data(), id: item.id };
+  //       })
+  //     );
+  //   });
+  // }, []);
   const [filterItem, setFilterItem] = useState([]);
   const [filterItem2, setFilterItem2] = useState([]);
   const search = (value) => {
@@ -44,7 +44,7 @@ const Search = ({ closeModal }) => {
   useMemo(() => {
     search(value);
   }, [value]);
-  console.log(filterItem.length, filterItem2.length);
+  console.log("result", result);
 
   return (
     <div className="w-full h-screen flex items-center justify-center fixed top-0 backdrop-blur-[1px] z-[1000]">
@@ -77,7 +77,7 @@ const Search = ({ closeModal }) => {
         </div>
         <div className="w-full">
           <div className="w-full">
-            {filterItem.map((res) => {
+            {filterItem?.map((res) => {
               return (
                 <div className="">
                   {value && (
@@ -108,7 +108,7 @@ const Search = ({ closeModal }) => {
             })}
           </div>
           <div className="w-full">
-            {filterItem2.map((res) => {
+            {filterItem2?.map((res) => {
               return (
                 <div className="">
                   {value && (

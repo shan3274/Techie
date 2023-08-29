@@ -4,36 +4,36 @@ import style from "../../styles/productmain.module.css";
 import Link from "next/link";
 import Search from "@/src/Homepage/Search";
 import { useMemo, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/src/utils/firebase-config";
 
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [
-      {
-        params: {
-          name: "next.js",
-        },
-      }, // See the "paths" section below
-    ],
-    fallback: true, // false or "blocking"
-  };
-};
+// export const getStaticPaths = async () => {
+//   return {
+//     paths: [
+//       {
+//         params: {
+//           name: "next.js",
+//         },
+//       }, // See the "paths" section below
+//     ],
+//     fallback: true, // false or "blocking"
+//   };
+// };
 
 const Header = () => {
   const [searchModal, setSearchModal] = useState(false);
 
-  // const [products, setProducts] = useState([]);
-  // useMemo(async () => {
-  //   await getDocs(collection(db, "Products")).then((response) => {
-  //     setProducts(
-  //       response.docs.map((data) => {
-  //         return { ...data.data(), id: data.id };
-  //       })
-  //     );
-  //   });
-  // }, []);
+  const [result, setProducts] = useState([]);
+  useMemo(async () => {
+    await getDocs(collection(db, "Products")).then((response) => {
+      setProducts(
+        response.docs.map((data) => {
+          return { ...data.data(), id: data.id };
+        })
+      );
+    });
+  }, []);
 
-  // console.log(products);
   return (
     <>
       <Head>
@@ -95,7 +95,7 @@ const Header = () => {
           </div>
         </header>
       </div>
-      {searchModal && <Search closeModal={setSearchModal} />}
+      {searchModal && <Search closeModal={setSearchModal} result={result} />}
     </>
   );
 };
