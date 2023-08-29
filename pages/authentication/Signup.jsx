@@ -524,8 +524,6 @@ const Signup = () => {
               </div>
             </div>
           </div>
-
-          <Footer className="absolute top[-12rem]" />
         </div>
       ) : (
         <div className="">

@@ -311,7 +311,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <Assistant />
     </>
   );
 };

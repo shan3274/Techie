@@ -20,7 +20,7 @@ const Login = () => {
     <div className=" w-full min-h-screen">
       <Header />
       <div className="w-full h-[75vh]  flex items-start  justify-center absolute top-[200px] text-blue-950 ">
-        <div className="w-[30%] h-[80%] bg-white border rounded-xl drop-shadow-xl mt-5 flex flex-col items-center justify-center ">
+        <div className="w-[30%] min-h-[100%] bg-white border rounded-xl drop-shadow-xl mt-5 flex flex-col items-center justify-center ">
           <div className="fixed top-[10%] text-[35px] font-[500] text-blue-950">
             Login
           </div>
@@ -112,9 +112,6 @@ const Login = () => {
             </Link>
           </div>
         </div>
-      </div>
-      <div className="absolute w-full top-[-25rem]">
-        <Footer />
       </div>
     </div>
   );
