@@ -71,33 +71,34 @@ const Registeruser = () => {
       validEmailError == "" &&
       userNameError == ""
     ) {
-      await createUserWithEmailAndPassword(auth, email, password).then(() => {
-        try {
-          const dataShow = {
-            fullName: fullName,
-            email: email,
-            email2: email2,
-            phone: phone,
-            address: address,
-            userName: userName,
-            password: password,
-            companyName: companyName,
-            gstin: gstin,
-            address: address,
-            industryType: industryType,
-            nature: nature,
-            userAddress: userAddress,
-            approve: "true",
-          };
-          const res = addDoc(databaseRef, dataShow).then((re) => {
-            alert("done");
-            window.location.reload(true);
-          });
-        } catch (error) {
-          let err = error.message.split("/");
-          alert(err[1]);
+      await createUserWithEmailAndPassword(auth, email, password).then(
+        async () => {
+          try {
+            const dataShow = {
+              fullName: fullName,
+              email: email,
+              email2: email2,
+              phone: phone,
+              address: address,
+              userName: userName,
+              password: password,
+              companyName: companyName,
+              gstin: gstin,
+              industryType: industryType,
+              nature: nature,
+              userAddress: userAddress,
+              approve: "true",
+            };
+            const res = await addDoc(databaseRef, dataShow).then((re) => {
+              alert("done");
+              window.location.reload(true);
+            });
+          } catch (error) {
+            let err = error.message.split("/");
+            alert(err[1]);
+          }
         }
-      });
+      );
     }
   };
 

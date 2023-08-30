@@ -13,18 +13,22 @@ const Signup = () => {
   const [passwordHover, setPasswordHover] = useState(false);
   const [buttonHover, setButtonHover] = useState(false);
   const [emailHover, setEmailHover] = useState(false);
+  const [email2Hover, set2EmailHover] = useState(false);
   const [verifyPasswordHover, setVerifyPasswordHover] = useState(false);
   const [companyNameHover, setCompanyNameHover] = useState(false);
   const [gstinHover, setGstinHover] = useState(false);
   const [addressHover, setAddressHover] = useState(false);
   const [industryTypeHover, setIndustryTypeHover] = useState(false);
   const [natureHover, setNatureHover] = useState(false);
-  const [applicationHover, setApplicatioHovern] = useState(false);
+  const [userAddressHover, setUserAddressoHovern] = useState(false);
+  const [phoneHover, setPhoneHovern] = useState(false);
 
   //   data state
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [email2, setEmail2] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [verifyPassword, setVerifyPassword] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -32,7 +36,7 @@ const Signup = () => {
   const [address, setAddress] = useState("");
   const [industryType, setIndustryType] = useState("");
   const [nature, setNature] = useState("");
-  const [application, setApplication] = useState("");
+  const [userAddress, setUserAddress] = useState("");
 
   // Loader state
   const [loading, setLoading] = useState(false);
@@ -70,17 +74,19 @@ const Signup = () => {
         const dataShow = {
           fullName: fullName,
           email: email,
+          email2: email2,
+          phone: phone,
+          address: address,
           userName: userName,
           password: password,
           companyName: companyName,
           gstin: gstin,
-          address: address,
           industryType: industryType,
           nature: nature,
-          application: application,
+          userAddress: userAddress,
           approve: "false",
         };
-        const res = addDoc(databaseRef, dataShow).then((re) => {
+        const res = await addDoc(databaseRef, dataShow).then((re) => {
           alert("done");
           route.push("/authentication/Successful");
         });
@@ -124,37 +130,9 @@ const Signup = () => {
           <div className="w-full min-h-[120vh]  flex items-start  justify-center absolute top-[200px] text-blue-950 ">
             <div className="w-[30%] min-h-[100%] border bg-white rounded-xl drop-shadow-xl mt-5 flex flex-col items-center justify-center py-10 ">
               <div className="relative top-[10%] text-[35px] font-[500] text-blue-950">
-                Sign up
+                Add user
               </div>
 
-              {/* Full name */}
-              <label
-                htmlFor=""
-                className={
-                  nameHover
-                    ? ` relative right-[23%] ] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px]  right-[23%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Full name
-              </label>
-              <input
-                title="this is user Name field"
-                type="text"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  nameHover && "rounded-none"
-                }`}
-                value={fullName}
-                onMouseOver={() => {
-                  setNameHover(true);
-                }}
-                onMouseOut={() => {
-                  if (fullName == "") setNameHover(false);
-                }}
-                onChange={(e) => {
-                  setFullName(e.target.value);
-                }}
-              />
               {/* user name */}
               <label
                 htmlFor=""
@@ -191,6 +169,63 @@ const Signup = () => {
                 }}
               />
               <div className=" text-[12px] text-red-700">{userNameError}</div>
+              {/* Full name */}
+              <label
+                htmlFor=""
+                className={
+                  nameHover
+                    ? ` relative right-[26%] ] top-[12px] bg-white duration-300 text-blue-900`
+                    : "relative top-[33px]  right-[26%] text-gray-400 duration-300 z-[1000]"
+                }
+              >
+                Name
+              </label>
+              <input
+                title="this is user Name field"
+                type="text"
+                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
+                  nameHover && "rounded-none"
+                }`}
+                value={fullName}
+                onMouseOver={() => {
+                  setNameHover(true);
+                }}
+                onMouseOut={() => {
+                  if (fullName == "") setNameHover(false);
+                }}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                }}
+              />
+
+              {/* phone */}
+              <label
+                htmlFor=""
+                className={
+                  phoneHover
+                    ? ` relative right-[25%] top-[12px] bg-white duration-300 text-blue-900`
+                    : "relative top-[33px] right-[25%] text-gray-400 duration-300 z-[1000]"
+                }
+              >
+                Phone
+              </label>
+              <input
+                title="this is email field"
+                type="email"
+                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
+                  phoneHover && "rounded-none"
+                }`}
+                value={phone}
+                onMouseOver={() => {
+                  setPhoneHovern(true);
+                }}
+                onMouseOut={() => {
+                  if (phone == "") setPhoneHovern(false);
+                }}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
+              />
               {/* email */}
               <label
                 htmlFor=""
@@ -233,6 +268,36 @@ const Signup = () => {
                 }}
               />
               <div className=" text-[12px] text-red-700">{validEmailError}</div>
+
+              {/* email2 */}
+              <label
+                htmlFor=""
+                className={
+                  email2Hover
+                    ? ` relative right-[20%] top-[12px] bg-white duration-300 text-blue-900`
+                    : "relative top-[33px] right-[20%] text-gray-400 duration-300 z-[1000]"
+                }
+              >
+                Second Email
+              </label>
+              <input
+                title="this is email field"
+                type="email"
+                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
+                  email2Hover && "rounded-none"
+                }`}
+                value={email2}
+                onMouseOver={() => {
+                  set2EmailHover(true);
+                }}
+                onMouseOut={() => {
+                  if (email2 == "") set2EmailHover(false);
+                }}
+                onChange={(e) => {
+                  setEmail2(e.target.value);
+                }}
+              />
+
               {/* Conpany name */}
               <label
                 htmlFor=""
@@ -259,6 +324,34 @@ const Signup = () => {
                 }}
                 onChange={(e) => {
                   setCompanyName(e.target.value);
+                }}
+              />
+              {/* user address*/}
+              <label
+                htmlFor=""
+                className={
+                  userAddressHover
+                    ? ` relative right-[21%] top-[12px] bg-white duration-300 text-blue-900`
+                    : "relative top-[33px] right-[21%] text-gray-400 duration-300 z-[1000]"
+                }
+              >
+                User Address
+              </label>
+              <input
+                title="this is email field"
+                type="email"
+                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
+                  userAddressHover && "rounded-none"
+                }`}
+                value={userAddress}
+                onMouseOver={() => {
+                  setUserAddressoHovern(true);
+                }}
+                onMouseOut={() => {
+                  if (userAddress == "") setUserAddressoHovern(false);
+                }}
+                onChange={(e) => {
+                  setUserAddress(e.target.value);
                 }}
               />
 
@@ -394,46 +487,7 @@ const Signup = () => {
                 <option value="Seller">Seller</option>
                 <option value="Both">Both</option>
               </select>
-              {/* Application */}
-              <label
-                htmlFor=""
-                className={
-                  applicationHover
-                    ? ` relative right-[25%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[25%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Application
-              </label>
-              <select
-                title="Application"
-                name=""
-                id=""
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  applicationHover && "rounded-none"
-                }`}
-                value={application}
-                onMouseOver={() => {
-                  setApplicatioHovern(true);
-                }}
-                onMouseOut={() => {
-                  if (application == "") setApplicatioHovern(false);
-                }}
-                onChange={(e) => {
-                  setApplication(e.target.value);
-                }}
-              >
-                <option value=""></option>
-                <option value="Thermal power">Thermal power</option>
-                <option value="Nuclear power">Nuclear power</option>
-                <option value="Solar power">Solar power</option>
-                <option value="Wind">Wind</option>
-                <option value="Hydro">Hydro</option>
-                <option value="Defence">Defence</option>
-                <option value="Civil">Civil</option>
-                <option value="Steal">Steal</option>
-                <option value="Others">Others</option>
-              </select>
+
               {/*password  */}
 
               <label
@@ -508,7 +562,7 @@ const Signup = () => {
                 className={`relative mt-10  top-[25%] w-[50%] bg-blue-950 text-white h-[40px] rounded-xl hover:rounded-sm duration-300 hover:scale-[1.05]`}
                 onClick={register}
               >
-                Singup
+                Add user
               </button>
               <div className="absolute bottom-[7rem] text-red-700">
                 {passwordError}

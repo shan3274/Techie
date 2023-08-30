@@ -1,6 +1,6 @@
 import { auth, db } from "@/src/utils/firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import Link from "next/link";
 import React, { useState, useMemo } from "react";
 
@@ -70,40 +70,29 @@ const Approvemodal = ({ closeModal, user }) => {
         </div>
         {user?.approve == "false" ? (
           <div className="absolute bottom-0 w-[100%] h-[10%] flex items-center justify-center gap-5">
-            <select
-              onChange={(e) => setApprove(e.target.value)}
-              className="w-[150px] h-[40px] border border-black rounded-md"
-            >
-              <option value="">Select</option>
-              <option value={true}>Approve</option>
-              <option value={false}>Not Approve</option>
-            </select>
-
             <button
               className={
-                approve == "true"
+                approve == true
                   ? `py-2 px-5 rounded-md bg-green-500  text-white`
                   : `py-2 px-5 rounded-md bg-red-500  text-white`
               }
               onClick={async () => {
-                if (approve == "true") {
-                  try {
-                    await createUserWithEmailAndPassword(
-                      auth,
-                      user.email,
-                      user.password
-                    ).then(async () => {
-                      await updateDoc(doc(db, "User", user.id), {
-                        approve: approve,
-                      }).then(() => window.location.reload(true));
-                    });
-                  } catch (error) {
-                    alert(error.message);
-                  }
+                try {
+                  await createUserWithEmailAndPassword(
+                    auth,
+                    user.email,
+                    user.password
+                  ).then(async () => {
+                    await updateDoc(doc(db, "User", user.id), {
+                      approve: "true",
+                    }).then(() => window.location.reload(true));
+                  });
+                } catch (error) {
+                  alert(error.message);
                 }
               }}
             >
-              submit
+              Approve
             </button>
           </div>
         ) : (
