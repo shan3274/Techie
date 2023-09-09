@@ -183,16 +183,16 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="w-full flex flex-col items-center justify-center h-[200px] fixed text-white bg-gradient-to-b from-orange-500 z-[1000]">
-        <div className="w-[60%] h-[50%] flex items-center justify-center">
+      <div className="w-full flex flex-col items-center justify-center h-[100px] fixed text-white bg-gradient-to-b from-orange-500 to-white z-[1000]">
+        <div className="w-[65%] h-[10F0%] flex items-center justify-center">
           <div className="w-[100%] h-[100%] flex gap-10 items-center justify-end ">
             <Link
-              className="text-[30px] w-[20%] h-[100%] flex items-center justify-end "
+              className="text-[30px] w-[35%] h-[100%] flex items-center justify-end "
               href="/"
             >
-              Logo
+              <img src="https://firebasestorage.googleapis.com/v0/b/e-com-2066c.appspot.com/o/assests%2FSaaro-removebg-preview.png?alt=media&token=9e15bc67-b468-427c-96e6-2e6dd235871c" />
             </Link>
-            <div className="w-[80%] h-[100%] flex gap-10 items-center justify-center text-[13px] cursor-pointer">
+            <div className="w-[100%] h-[100%] flex gap-10 items-center justify-center text-[13px] xl:text-[15px] cursor-pointer">
               <Link
                 href="/"
                 className=" transition-[1s]   hover:border rounded-full py-1 px-2 hover:border-white"
@@ -200,25 +200,25 @@ const Header = () => {
                 Home
               </Link>
               <Link
+                href="/about"
+                className=" transition-[1s]   hover:border rounded-full py-1 px-2 hover:border-white"
+              >
+                About us
+              </Link>
+              {/* <Link
                 href="#"
                 className=" transition-[1s]   hover:border rounded-full py-1 px-2 hover:border-white"
               >
-                Features
-              </Link>
+                Work
+              </Link> */}
               <Link
-                href="#"
+                href="/business"
                 className=" transition-[1s]   hover:border rounded-full py-1 px-2 hover:border-white"
               >
-                Service
+                Our Business
               </Link>
               <Link
-                href="#"
-                className=" transition-[1s]   hover:border rounded-full py-1 px-2 hover:border-white"
-              >
-                Listed
-              </Link>
-              <Link
-                href="#"
+                href="/contact"
                 className=" transition-[1s]   hover:border rounded-full py-1 px-2 hover:border-white"
               >
                 Contact
@@ -250,41 +250,6 @@ const Header = () => {
             )}
           </div>
         </div>
-        {userName != "" ? (
-          <div className="w-[100%] h-[50%] flex items-start justify-center relative">
-            <input
-              type="text"
-              className="w-[50%] h-[40%] border border-gray-500 rounded-md  pl-5"
-              value={search}
-              onMouseEnter={() => {
-                setPlaceholder(false);
-              }}
-              onMouseOut={() => {
-                if (search == "") {
-                  setPlaceholder(true);
-                }
-              }}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            {placeholder && (
-              <div className="absolute left-[26.5%] top-2 text-gray-400">
-                {" "}
-                <Typewriter
-                  options={{
-                    strings: ["Search anything", "Sarch anytime"],
-                    autoStart: true,
-                    loop: true,
-                  }}
-                />
-              </div>
-            )}
-            <div className="w-[50px] h-[40%] bg-blue-950 ml-1 rounded-md absolute right-[25%] text-white flex items-center justify-center text-[25px] cursor-pointer">
-              <BiSearch />
-            </div>
-          </div>
-        ) : (
-          <div className="w-[100%] h-[50%] flex items-start justify-center relative"></div>
-        )}
       </div>
       {/* user profile */}
       <div

@@ -82,7 +82,7 @@ const Signup = () => {
           companyName: companyName,
           gstin: gstin,
           industryType: industryType,
-          nature: nature,
+          // nature: nature,
           userAddress: userAddress,
           approve: "false",
         };
@@ -203,29 +203,40 @@ const Signup = () => {
                 htmlFor=""
                 className={
                   phoneHover
-                    ? ` relative right-[25%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[25%] text-gray-400 duration-300 z-[1000]"
+                    ? ` relative right-[11%] top-[12px] bg-white duration-300 text-blue-900`
+                    : "relative top-[33px] right-[11%] text-gray-400 duration-300 z-[1000]"
                 }
               >
                 Phone
               </label>
-              <input
-                title="this is email field"
-                type="email"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  phoneHover && "rounded-none"
-                }`}
-                value={phone}
-                onMouseOver={() => {
-                  setPhoneHovern(true);
-                }}
-                onMouseOut={() => {
-                  if (phone == "") setPhoneHovern(false);
-                }}
-                onChange={(e) => {
-                  setPhone(e.target.value);
-                }}
-              />
+              <div className="flex gap-5 w-[70%]">
+                {" "}
+                <select
+                  name=""
+                  id=""
+                  className="w-[20%] border border-black rounded-xl"
+                >
+                  <option value="+1">+1</option>
+                  <option value="+91">+91</option>
+                </select>
+                <input
+                  title="this is email field"
+                  type="email"
+                  className={`w-[80%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
+                    phoneHover && "rounded-none"
+                  }`}
+                  value={phone}
+                  onMouseOver={() => {
+                    setPhoneHovern(true);
+                  }}
+                  onMouseOut={() => {
+                    if (phone == "") setPhoneHovern(false);
+                  }}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                />
+              </div>
               {/* email */}
               <label
                 htmlFor=""
@@ -454,7 +465,7 @@ const Signup = () => {
                 <option value="Others">Others</option>
               </select>
               {/*  Nature of business*/}
-              <label
+              {/* <label
                 htmlFor=""
                 className={
                   natureHover
@@ -486,7 +497,7 @@ const Signup = () => {
                 <option value="Buyer">Buyer</option>
                 <option value="Seller">Seller</option>
                 <option value="Both">Both</option>
-              </select>
+              </select> */}
 
               {/*password  */}
 
@@ -558,6 +569,9 @@ const Signup = () => {
                   setVerifyPassword(e.target.value);
                 }}
               />
+              <div className="w-full flex items-center justify-center gap-5 mt-5">
+                <input type="checkbox" name="" id="" /> <div className="">Accept Terms & conditions</div>
+              </div>
               <button
                 className={`relative mt-10  top-[25%] w-[50%] bg-blue-950 text-white h-[40px] rounded-xl hover:rounded-sm duration-300 hover:scale-[1.05]`}
                 onClick={register}

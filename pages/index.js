@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Saaro</title>
       </Head>
       <div className="bg-white">
         {isUserLogin ? <Loginhome /> : <Homepage />}

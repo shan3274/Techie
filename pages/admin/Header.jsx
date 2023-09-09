@@ -80,6 +80,8 @@ const Homepage = () => {
             <Link href="/admin/Account">Account request</Link>
             <Link href="/admin/addusers">Add users</Link>
             <Link href="/admin/Users">Users</Link>
+            <Link href="/admin/UI">Upate UI</Link>
+            <Link href="/admin/Updateads">Post Ads</Link>
           </div>
         </div>
       </div>
