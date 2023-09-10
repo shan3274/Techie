@@ -32,7 +32,7 @@ const index = () => {
   const [approve, setApprove] = useState("Not approve");
 
   const downloadImageURLs = [];
-  let downloadDocumentURLs = "";
+  const downloadDocumentURLs = [];
 
   const sellfun = async () => {
     try {
@@ -59,7 +59,7 @@ const index = () => {
       documentURLs = await uploadBytes(documentRef, doc);
       await getDownloadURL(ref(storageRef, documentURLs.ref.fullPath)).then(
         (response) => {
-          downloadDocumentURLs = response;
+          downloadDocumentURLs.push(response);
         }
       );
 

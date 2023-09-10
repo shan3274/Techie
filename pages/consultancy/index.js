@@ -6,8 +6,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 
-
-
 import { Autoplay, Pagination, Mousewheel, Keyboard } from "swiper/modules";
 
 import Header from "@/src/Homepage/Header";
@@ -349,7 +347,7 @@ const index = () => {
                 }`}
               >
                 <h1 className="text-white text-[25px] font-[500]">
-                  Please loging into your account
+                  Please login into your account
                 </h1>
                 <div className="w-[100%] flex items-center justify-center gap-5">
                   <Link
@@ -443,9 +441,9 @@ const index = () => {
           </div>
         </SwiperSlide>
       </Swiper>
-      <div className="w-full flex items-center justify-center">
+      <div className="w-full flex items-center justify-center mb-10">
         <div className="w-[95vw] h-[50vh]  bg-[rgba(0,0,0,0.5)] gap-10 rounded-2xl border drop-shadow-xl mt-10 flex flex-col items-center justify-center">
-          <h1 className="text-[35px] text-white font-[600]">Consultency</h1>
+          <h1 className="text-[35px] text-white font-[600]">Consultancy</h1>
           <p className=" text-center text-white w-[60%]">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati
             dolores quo quas inventore accusamus aspernatur possimus adipisci
@@ -456,9 +454,6 @@ const index = () => {
             Know more
           </button>
         </div>
-      </div>
-      <div className="absolute w-full top-0">
-        <Footer />
       </div>
     </>
   );
