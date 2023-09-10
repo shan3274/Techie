@@ -23,9 +23,12 @@ const Services = () => {
           >
             Technical Product
           </Link>
-          <div className="w-[20%] h-[50%] bg-white text-orange-600 border border-orange-500 rounded-lg transition-[1s] hover:scale-[1.05] flex items-center justify-center text-[16px] cursor-pointer">
+          <Link
+            href="/service"
+            className="w-[20%] h-[50%] bg-white text-orange-600 border border-orange-500 rounded-lg transition-[1s] hover:scale-[1.05] flex items-center justify-center text-[16px] cursor-pointer"
+          >
             Technical Services
-          </div>
+          </Link>
           <Link
             href="/consultancy"
             className="w-[20%] h-[50%] bg-white text-orange-600 border border-orange-500 drop-shadow-lg rounded-lg transition-[1s] hover:scale-[1.05] flex items-center justify-center text-[16px] cursor-pointer"

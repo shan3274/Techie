@@ -46,7 +46,7 @@ const Form = () => {
       catalog: downloadLogoURLs,
       image: downloadImageURLs,
     };
-    await addDoc(collection(db, "Consultancy"), data).then(() => {
+    await addDoc(collection(db, "Services"), data).then(() => {
       alert("Success");
       setType("");
       setDetails("");
@@ -63,9 +63,7 @@ const Form = () => {
     <>
       <Header />
       <div className="w-full min-h-screen flex flex-col items-center justify-center relative top-[100px] gap-5 pt-10">
-        <label className="text-[40px] text-blue-950 font-[600]">
-          Consultancy
-        </label>
+        <label className="text-[40px] text-blue-950 font-[600]">Services</label>
         {/* type */}
         <select
           name="type"
@@ -74,16 +72,25 @@ const Form = () => {
           onChange={(e) => setType(e.target.value)}
         >
           <option value="">Select</option>
-          <option value="Design & Engineering">Design & Engineering</option>
-          <option value="Project Management">Project Management</option>
-          <option value="Insurance">Insurance</option>
-          <option value="Contract Management">Contract Management</option>
-          <option value="Statutory Approvals">Statutory Approvals</option>
-          <option value="International Certification">
-            International Certification
+          <option value="Expert Civil Services">Expert Civil Services</option>
+          <option value="Expert Mechanical Services">
+            Expert Mechanical Services
           </option>
-          <option value="Safety">Safety</option>
-          <option value="Others">Others</option>
+          <option value="Expert Electrical services">
+            Expert Electrical services
+          </option>
+          <option value="Contractor Civil">Contractor Civil</option>
+          <option value="Contractor Mechanical">Contractor Mechanical</option>
+          <option value="Contractor Electrical">Contractor Electrical</option>
+          <option value="Contractor Instrumentation">
+            Contractor Instrumentation
+          </option>
+          <option value="Lease / Hire - Cranes, Generator, Pumps, Equipment etc">
+            Lease / Hire - Cranes, Generator, Pumps, Equipment etc
+          </option>
+          <option value="Annual Maintenance Contract ">
+            Annual Maintenance Contract
+          </option>
         </select>
         <textarea
           className="w-[30%] h-[100px] border border-black rounded-md pl-2 pt-2 resize-none"
@@ -93,7 +100,7 @@ const Form = () => {
         <input
           type="text"
           className="w-[30%] h-[40px] border border-black rounded-md pl-2 "
-          placeholder="Major Consultancy Work"
+          placeholder="Major Technical Services Work"
           onChange={(e) => setWork(e.target.value)}
         />
         <input

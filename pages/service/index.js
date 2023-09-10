@@ -35,7 +35,7 @@ const index = () => {
   }, [userName]);
 
   const datas = async () => {
-    await getDocs(collection(db, "Consultancy")).then((response) => {
+    await getDocs(collection(db, "Services")).then((response) => {
       setLoading(true);
       setData(
         response.docs.map((data) => {
@@ -121,7 +121,7 @@ const index = () => {
                           unde odio eligendi!
                         </p>
                         <Link
-                          href="/consultancy/Form"
+                          href="/service/Form"
                           className="w-[100px] h-[35px] bg-blue-400 text-white rounded-lg drop-shadow-lg flex items-center justify-center transition-[1s] hover:scale-[1.05]"
                         >
                           Add +
@@ -153,7 +153,9 @@ const index = () => {
           </Swiper>
           <div className="w-full flex items-center justify-center mb-10">
             <div className="w-[95vw] h-[50vh]  bg-[rgba(0,0,0,0.5)] gap-10 rounded-2xl border drop-shadow-xl mt-10 flex flex-col items-center justify-center">
-              <h1 className="text-[35px] text-white font-[600]">Consultancy</h1>
+              <h1 className="text-[35px] text-white font-[600]">
+                Technical Services
+              </h1>
               <p className=" text-center text-white w-[60%]">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Obcaecati dolores quo quas inventore accusamus aspernatur
