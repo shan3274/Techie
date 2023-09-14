@@ -48,7 +48,7 @@ const Swipers = () => {
                   <div className="w-[80%] h-[100%] bg-orange-400 flex  items-center justify-center rounded-2xl border border-orange-500">
                     <div className="w-[50%] h-[100%] flex flex-col items-start justify-center gap-10 pl-10">
                       <div className="w-[150px] font-[500] text-white">
-                        <img src={item.logo[0]} alt="" className="w-[100px]" />
+                        <img src={item?.logo} alt="" className="w-[100px]" />
                       </div>
                       <div className="xl:text-[40px] text-[30px] text-blue-950 font-[600] text-left ">
                         {item.title}
@@ -70,7 +70,7 @@ const Swipers = () => {
                     </div>
                     <div className="w-[50%] h-[100%] rounded-2xl">
                       <img
-                        src={item.image[0]}
+                        src={item?.image}
                         alt=""
                         className="w-[10%] h-[80% rounded-2xl"
                       />
