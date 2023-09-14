@@ -61,8 +61,7 @@ const Form = () => {
 
   return (
     <>
-      <Header />
-      <div className="w-full min-h-screen flex flex-col items-center justify-center relative top-[100px] gap-5 pt-10">
+      <div className="w-full min-h-screen flex flex-col items-center justify-center  gap-5 ">
         <label className="text-[40px] text-blue-950 font-[600]">
           Consultancy
         </label>
@@ -73,7 +72,7 @@ const Form = () => {
           className="w-[30%] h-[40px] border border-black rounded-md pl-2"
           onChange={(e) => setType(e.target.value)}
         >
-          <option value="">Select</option>
+          <option value="">Consultancy Domain</option>
           <option value="Design & Engineering">Design & Engineering</option>
           <option value="Project Management">Project Management</option>
           <option value="Insurance">Insurance</option>
@@ -87,19 +86,19 @@ const Form = () => {
         </select>
         <textarea
           className="w-[30%] h-[100px] border border-black rounded-md pl-2 pt-2 resize-none"
-          placeholder="Details"
+          placeholder="Work Area of Consultancy"
           onChange={(e) => setDetails(e.target.value)}
         />
         <input
           type="text"
           className="w-[30%] h-[40px] border border-black rounded-md pl-2 "
-          placeholder="Major Consultancy Work"
+          placeholder="Major Consultancy Work Executed"
           onChange={(e) => setWork(e.target.value)}
         />
         <input
           type="text"
           className="w-[30%] h-[40px] border border-black rounded-md pl-2"
-          placeholder="Value / Price of Major work"
+          placeholder="Value / Price of Major work Executed"
           onChange={(e) => setValue(e.target.value)}
         />
         <div className="w-[100%] flex items-center justify-center">
@@ -109,7 +108,7 @@ const Form = () => {
             className="w-[20%] h-[50px] flex items-center justify-center text-white rounded-md bg-yellow-500 cursor-pointer"
             title="Upload Unpriced PO copy or Company Profile or Catalogue"
           >
-            Upload +
+            Catalogue +
           </label>
           <input
             type="file"

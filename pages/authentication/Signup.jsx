@@ -1,6 +1,7 @@
 import Footer from "@/src/Homepage/Footer";
 import Header from "@/src/Homepage/Header";
 import { db } from "@/src/utils/firebase-config";
+import { Password } from "@mui/icons-material";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,35 +9,30 @@ import React, { useState, useEffect, useMemo } from "react";
 import { BallTriangle } from "react-loader-spinner";
 
 const Signup = () => {
-  const [userHover, setUserHover] = useState(false);
-  const [nameHover, setNameHover] = useState(false);
-  const [passwordHover, setPasswordHover] = useState(false);
-  const [buttonHover, setButtonHover] = useState(false);
-  const [emailHover, setEmailHover] = useState(false);
-  const [email2Hover, set2EmailHover] = useState(false);
-  const [verifyPasswordHover, setVerifyPasswordHover] = useState(false);
-  const [companyNameHover, setCompanyNameHover] = useState(false);
-  const [gstinHover, setGstinHover] = useState(false);
-  const [addressHover, setAddressHover] = useState(false);
-  const [industryTypeHover, setIndustryTypeHover] = useState(false);
-  const [natureHover, setNatureHover] = useState(false);
-  const [userAddressHover, setUserAddressoHovern] = useState(false);
-  const [phoneHover, setPhoneHovern] = useState(false);
-
   //   data state
-  const [fullName, setFullName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [email2, setEmail2] = useState("");
+  const [userID, setUserID] = useState("");
+  const [contactPersonName, setConatactPersonName] = useState("");
   const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [verifyPassword, setVerifyPassword] = useState("");
-  const [companyName, setCompanyName] = useState("");
+  const [landline, setLandline] = useState("");
+  const [email, setEmail] = useState("");
+  const [secondaryEmail, setSecondaryEmail] = useState("");
+  const [companyName, setComapanyName] = useState("");
+  const [website, setWebsite] = useState("");
   const [gstin, setGstin] = useState("");
-  const [address, setAddress] = useState("");
-  const [industryType, setIndustryType] = useState("");
-  const [nature, setNature] = useState("");
-  const [userAddress, setUserAddress] = useState("");
+  const [landmark, setLandmark] = useState("");
+  const [city, setCity] = useState("");
+  const [pin, setPin] = useState("");
+  const [country, setCountry] = useState("");
+  const [type, setType] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifyPassword, setVerfyPassword] = useState("");
+  const [tc, setTc] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+  const [landlineCode, setLandlineCode] = useState("");
+
+  // error state
+  const [userNameError, setUserNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   // Loader state
   const [loading, setLoading] = useState(false);
@@ -45,7 +41,6 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState("");
   const [passwordLengthError, setPasswordLengthError] = useState("");
   const [validEmailError, setValidEmailError] = useState("");
-  const [userNameError, setUserNameError] = useState("");
 
   //   navigation
   const route = useRouter();
@@ -54,45 +49,44 @@ const Signup = () => {
   const [user, setUser] = useState([]);
   const [emails, setEmails] = useState([]);
   const [userNames, setUserNames] = useState([]);
-  useEffect(() => {
-    try {
-      setDatabaseRef(collection(db, `User`));
-    } catch (error) {
-      console.log(error.message);
-    }
-  }, []);
 
   const register = async () => {
     if (
       password == verifyPassword &&
-      passwordLengthError == "" &&
-      passwordError == "" &&
-      validEmailError == "" &&
-      userNameError == ""
+      tc == "on" &&
+      userNameError == "" &&
+      emailError == ""
     ) {
-      try {
-        const dataShow = {
-          fullName: fullName,
-          email: email,
-          email2: email2,
-          phone: phone,
-          address: address,
-          userName: userName,
-          password: password,
-          companyName: companyName,
-          gstin: gstin,
-          industryType: industryType,
-          // nature: nature,
-          userAddress: userAddress,
-          approve: "false",
-        };
-        const res = await addDoc(databaseRef, dataShow).then((re) => {
-          alert("done");
+      await addDoc(collection(db, "User"), {
+        userName: userID,
+        fullName: contactPersonName,
+        phone: phone,
+        landline: landline,
+        email: email,
+        secondaryEmail: secondaryEmail,
+        companyName: companyName,
+        website: website,
+        gstin: gstin,
+        landmark: landmark,
+        city: city,
+        pin: pin,
+        country: country,
+        type: type,
+        countryCode: countryCode,
+        landlineCode: landlineCode,
+        approve: "false",
+      })
+        .then(() => {
           route.push("/authentication/Successful");
+        })
+        .catch((err) => {
+          alert("error: " + err.message);
         });
-      } catch (error) {
-        let err = error.message.split("/");
-        alert(err[1]);
+    } else {
+      if (tc == "") {
+        alert("please accept terms and conditions");
+      } else {
+        alert("please check the fields");
       }
     }
   };
@@ -121,339 +115,150 @@ const Signup = () => {
       })
     );
   }, [user]);
-  console.log(userNames);
+  console.log(tc, userNameError, emailError, password, verifyPassword);
   return (
     <>
-      {loading ? (
-        <div className=" w-full min-h-screen">
-          <Header />
-          <div className="w-full min-h-[120vh]  flex items-start  justify-center absolute top-[200px] text-blue-950 ">
-            <div className="w-[30%] min-h-[100%] border bg-white rounded-xl drop-shadow-xl mt-5 flex flex-col items-center justify-center py-10 ">
-              <div className="relative top-[10%] text-[35px] font-[500] text-blue-950">
-                Add user
-              </div>
-
-              {/* user name */}
-              <label
-                htmlFor=""
-                className={
-                  userHover
-                    ? ` relative right-[23%] ] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px]  right-[23%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                User Name
-              </label>
+      <Header />
+      {user.length > 0 ? (
+        <div className="w-full h-screen flex items-center justify-center flex-col relative">
+          <div className="absolute top-[120px] lg:top-[100px] text-[30px] font-[600] text-blue-950">
+            Sign up
+          </div>
+          <div className="w-[80%] flex items-center justify-center h-screen gap-10">
+            <div className="w-[50%] flex items-end justify-center flex-col gap-5 ">
               <input
-                title="this is user Name field"
                 type="text"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  userHover && "rounded-none"
-                }`}
-                value={userName}
-                onMouseOver={() => {
-                  setUserHover(true);
-                }}
+                placeholder="User ID"
+                className={`w-[50%] h-[40px] border border-black rounded-md pl-5 ${
+                  userNameError != "" && "border-red-500 text-red-500"
+                } `}
                 onMouseOut={() => {
-                  if (userName == "") setUserHover(false);
-
-                  if (userNames.includes(userName)) {
+                  if (userNames.includes(userID)) {
                     setUserNameError("Username already in use");
                   } else {
                     setUserNameError("");
                   }
                 }}
-                onChange={(e) => {
-                  setUserName(e.target.value);
+                onChange={(event) => {
+                  setUserID(event.target.value);
                   setUserNameError("");
                 }}
               />
-              <div className=" text-[12px] text-red-700">{userNameError}</div>
-              {/* Full name */}
-              <label
-                htmlFor=""
-                className={
-                  nameHover
-                    ? ` relative right-[26%] ] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px]  right-[26%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Name
-              </label>
-              <input
-                title="this is user Name field"
-                type="text"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  nameHover && "rounded-none"
-                }`}
-                value={fullName}
-                onMouseOver={() => {
-                  setNameHover(true);
-                }}
-                onMouseOut={() => {
-                  if (fullName == "") setNameHover(false);
-                }}
-                onChange={(e) => {
-                  setFullName(e.target.value);
-                }}
-              />
 
-              {/* phone */}
-              <label
-                htmlFor=""
-                className={
-                  phoneHover
-                    ? ` relative right-[11%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[11%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Phone
-              </label>
-              <div className="flex gap-5 w-[70%]">
-                {" "}
+              <input
+                type="text"
+                placeholder="Contact person name"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setConatactPersonName(event.target.value)}
+              />
+              <div className="w-[50%] h-[40px] flex gap-3">
                 <select
                   name=""
                   id=""
-                  className="w-[20%] border border-black rounded-xl"
+                  className="w-[20%] h-[40px] border border-black rounded-md pl-1"
+                  onChange={(event) => setCountryCode(event.target.value)}
                 >
-                  <option value="+1">+1</option>
                   <option value="+91">+91</option>
+                  <option value="+91">+92</option>
+                  <option value="+91">+93</option>
+                  <option value="+91">+94</option>
                 </select>
                 <input
-                  title="this is email field"
-                  type="email"
-                  className={`w-[80%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                    phoneHover && "rounded-none"
-                  }`}
-                  value={phone}
-                  onMouseOver={() => {
-                    setPhoneHovern(true);
-                  }}
-                  onMouseOut={() => {
-                    if (phone == "") setPhoneHovern(false);
-                  }}
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
+                  type="text"
+                  placeholder="Phone"
+                  className="w-[80%] h-[40px] border border-black rounded-md pl-5"
+                  onChange={(event) => setPhone(event.target.value)}
                 />
               </div>
-              {/* email */}
-              <label
-                htmlFor=""
-                className={
-                  emailHover
-                    ? ` relative right-[27%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[27%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Email
-              </label>
+              <div className="w-[50%] h-[40px] flex gap-3">
+                <select
+                  name=""
+                  id=""
+                  className="w-[20%] h-[40px] border border-black rounded-md pl-1"
+                  onChange={(event) => setLandlineCode(event.target.value)}
+                >
+                  <option value="+91">+91</option>
+                  <option value="+91">+92</option>
+                  <option value="+91">+93</option>
+                  <option value="+91">+94</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Landline"
+                  className="w-[80%] h-[40px] border border-black rounded-md pl-5"
+                  onChange={(event) => setLandline(event.target.value)}
+                />
+              </div>
               <input
-                title="this is email field"
                 type="email"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  emailHover && "rounded-none"
-                }`}
-                value={email}
-                onMouseOver={() => {
-                  setEmailHover(true);
-                }}
+                placeholder="Primary email"
+                className={`w-[50%] h-[40px] border border-black rounded-md pl-5 ${
+                  emailError != "" && "border-red-500 text-red-500"
+                } `}
                 onMouseOut={() => {
-                  if (email == "") setEmailHover(false);
-                  if (email != "") {
-                    let hold = email.split("@");
-                    if (hold[1] != "gmail.com") {
-                      setValidEmailError("");
-                    } else {
-                      setValidEmailError("Please enter a valid email");
-                    }
-                  }
-
                   if (emails.includes(email)) {
-                    setValidEmailError("Email already in use");
+                    setEmailError("Username already in use");
+                  } else {
+                    setEmailError("");
                   }
                 }}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setValidEmailError("");
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  setEmailError("");
                 }}
               />
-              <div className=" text-[12px] text-red-700">{validEmailError}</div>
-
-              {/* email2 */}
-              <label
-                htmlFor=""
-                className={
-                  email2Hover
-                    ? ` relative right-[20%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[20%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Second Email
-              </label>
               <input
-                title="this is email field"
                 type="email"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  email2Hover && "rounded-none"
-                }`}
-                value={email2}
-                onMouseOver={() => {
-                  set2EmailHover(true);
-                }}
-                onMouseOut={() => {
-                  if (email2 == "") set2EmailHover(false);
-                }}
-                onChange={(e) => {
-                  setEmail2(e.target.value);
-                }}
+                placeholder="Secondary email"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setSecondaryEmail(event.target.value)}
               />
-
-              {/* Conpany name */}
-              <label
-                htmlFor=""
-                className={
-                  companyNameHover
-                    ? ` relative right-[20%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[20%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Company Name
-              </label>
               <input
-                title="this is Company name field"
                 type="text"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  companyNameHover && "rounded-none"
-                }`}
-                value={companyName}
-                onMouseOver={() => {
-                  setCompanyNameHover(true);
-                }}
-                onMouseOut={() => {
-                  if (companyName == "") setCompanyNameHover(false);
-                }}
-                onChange={(e) => {
-                  setCompanyName(e.target.value);
-                }}
+                placeholder="Company website"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setWebsite(event.target.value)}
               />
-              {/* user address*/}
-              <label
-                htmlFor=""
-                className={
-                  userAddressHover
-                    ? ` relative right-[21%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[21%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                User Address
-              </label>
               <input
-                title="this is email field"
-                type="email"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  userAddressHover && "rounded-none"
-                }`}
-                value={userAddress}
-                onMouseOver={() => {
-                  setUserAddressoHovern(true);
-                }}
-                onMouseOut={() => {
-                  if (userAddress == "") setUserAddressoHovern(false);
-                }}
-                onChange={(e) => {
-                  setUserAddress(e.target.value);
-                }}
-              />
-
-              {/* gstin */}
-
-              <label
-                htmlFor=""
-                className={
-                  gstinHover
-                    ? ` relative right-[29%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[29%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Gstin
-              </label>
-              <input
-                title="this is GST Number field"
                 type="text"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  gstinHover && "rounded-none"
-                }`}
-                value={gstin}
-                onMouseOver={() => {
-                  setGstinHover(true);
-                }}
-                onMouseOut={() => {
-                  if (gstin == "") setGstinHover(false);
-                }}
-                onChange={(e) => {
-                  setGstin(e.target.value);
-                }}
+                placeholder="Comapny name"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setComapanyName(event.target.value)}
               />
-              {/* address */}
-              <label
-                htmlFor=""
-                className={
-                  addressHover
-                    ? ` relative right-[19%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[19%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Company address
-              </label>
+            </div>
+            {/* section 2 */}
+            <div className="w-[50%] flex items-start justify-center flex-col gap-5">
               <input
-                title="Company address"
                 type="text"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  addressHover && "rounded-none"
-                }`}
-                value={address}
-                onMouseOver={() => {
-                  setAddressHover(true);
-                }}
-                onMouseOut={() => {
-                  if (address == "") setAddressHover(false);
-                }}
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
+                placeholder="Landmark"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setLandmark(event.target.value)}
               />
-              {/* Type */}
-              <label
-                htmlFor=""
-                className={
-                  industryTypeHover
-                    ? ` relative right-[21%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[21%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Type of industry
-              </label>
-
+              <input
+                type="text"
+                placeholder="City"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setCity(event.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Pin"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setPin(event.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Country"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setCountry(event.target.value)}
+              />
               <select
-                title="Industry Type"
                 name=""
                 id=""
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  industryTypeHover && "rounded-none"
-                }`}
-                value={industryType}
-                onMouseOver={() => {
-                  setIndustryTypeHover(true);
-                }}
-                onMouseOut={() => {
-                  if (industryType == "") setIndustryTypeHover(false);
-                }}
-                onChange={(e) => {
-                  setIndustryType(e.target.value);
-                }}
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setType(event.target.value)}
               >
-                <option value=""></option>
+                <option value="">Deals in</option>
                 <option value="Mechanical">Mechanical</option>
                 <option value="Electrical">Electrical</option>
                 <option value="Oil and gas">Oil and gas</option>
@@ -464,141 +269,66 @@ const Signup = () => {
                 <option value="Multi">Multi</option>
                 <option value="Others">Others</option>
               </select>
-              {/*  Nature of business*/}
-              {/* <label
-                htmlFor=""
-                className={
-                  natureHover
-                    ? ` relative right-[19%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[19%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Nature of business
-              </label>
-              <select
-                title="Nature of business"
-                name=""
-                id=""
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  natureHover && "rounded-none"
-                }`}
-                value={nature}
-                onMouseOver={() => {
-                  setNatureHover(true);
-                }}
-                onMouseOut={() => {
-                  if (nature == "") setNatureHover(false);
-                }}
-                onChange={(e) => {
-                  setNature(e.target.value);
-                }}
-              >
-                <option value=""></option>
-                <option value="Buyer">Buyer</option>
-                <option value="Seller">Seller</option>
-                <option value="Both">Both</option>
-              </select> */}
-
-              {/*password  */}
-
-              <label
-                htmlFor=""
-                className={
-                  passwordHover
-                    ? ` relative right-[25%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[25%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Password
-              </label>
               <input
-                title="Password"
-                type="password"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  passwordHover && "rounded-none"
-                }`}
-                value={password}
-                onMouseOver={() => {
-                  setPasswordHover(true);
-                }}
-                onMouseOut={() => {
-                  if (password == "") setPasswordHover(false);
-                  if (password.length < 6 && password != "") {
-                    setPasswordLengthError("Password must be at least 6");
-                  } else {
-                    setPasswordLengthError("");
-                  }
-                }}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                type="text"
+                placeholder="Gstin"
+                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                onChange={(event) => setGstin(event.target.value)}
               />
-              <div className=" text-[12px] text-red-700">
-                {passwordLengthError}
-              </div>
-              {/* verify passsword */}
-              <label
-                htmlFor=""
-                className={
-                  verifyPasswordHover
-                    ? ` relative right-[21%] top-[12px] bg-white duration-300 text-blue-900`
-                    : "relative top-[33px] right-[21%] text-gray-400 duration-300 z-[1000]"
-                }
-              >
-                Verify Password
-              </label>
               <input
-                title="verify feild"
                 type="password"
-                className={`w-[70%] h-[40px] border pl-5 border-black rounded-xl duration-300 ${
-                  verifyPasswordHover && "rounded-none"
-                }`}
-                value={verifyPassword}
-                onMouseOver={() => {
-                  setVerifyPasswordHover(true);
-                }}
+                placeholder="Password"
+                className={`w-[50%] h-[40px] border border-black rounded-md pl-5 ${
+                  passwordError != "" && "border-red-500 text-red-500"
+                } `}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="Verify password"
+                className={`w-[50%] h-[40px] border border-black rounded-md pl-5 ${
+                  passwordError != "" && "border-red-500 text-red-500"
+                } `}
                 onMouseOut={() => {
-                  if (verifyPassword == "") setVerifyPasswordHover(false);
-                  if (password == verifyPassword) {
+                  if (password != verifyPassword) {
+                    setPasswordError("Username already in use");
+                  } else {
                     setPasswordError("");
-                  } else {
-                    setPasswordError("Password not match");
                   }
                 }}
-                onChange={(e) => {
-                  setVerifyPassword(e.target.value);
+                onChange={(event) => {
+                  setVerfyPassword(event.target.value);
+                  setPasswordError("");
                 }}
               />
-              <div className="w-full flex items-center justify-center gap-5 mt-5">
-                <input type="checkbox" name="" id="" /> <div className="">Accept Terms & conditions</div>
-              </div>
-              <button
-                className={`relative mt-10  top-[25%] w-[50%] bg-blue-950 text-white h-[40px] rounded-xl hover:rounded-sm duration-300 hover:scale-[1.05]`}
-                onClick={register}
-              >
-                Add user
-              </button>
-              <div className="absolute bottom-[7rem] text-red-700">
-                {passwordError}
-              </div>
-              <div className="relative top-5">
-                Already user?{" "}
-                <Link
-                  href="/authentication/Login"
-                  className="underline text-blue-500"
-                >
-                  Login
-                </Link>
-              </div>
             </div>
           </div>
+          <div className="w-[50%] flex items-center justify-center h-[40px] gap-3 absolute bottom-[100px]">
+            <input
+              type="checkbox"
+              name=""
+              id=""
+              onChange={(e) => setTc(e.target.value)}
+            />{" "}
+            Accept terms & conditions{" "}
+          </div>
+
+          <div className="absolute bottom-[80px]">
+            Already user ?{" "}
+            <Link href="/authentication/Login" className="text-blue-500">
+              Login
+            </Link>{" "}
+          </div>
+          <button
+            className="w-[150px] h-[40px] bg-green-500 text-white rounded-full absolute bottom-[20px]"
+            onClick={() => register()}
+          >
+            Sign up
+          </button>
         </div>
       ) : (
-        <div className="">
-          <Header />
-          <div className="w-full h-screen flex items-center justify-center">
-            <BallTriangle />
-          </div>
+        <div className="w-full h-screen flex items-center justify-center">
+          <BallTriangle />
         </div>
       )}
     </>

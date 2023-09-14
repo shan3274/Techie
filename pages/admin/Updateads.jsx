@@ -4,15 +4,19 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { app } from "@/src/utils/firebase-config";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/src/utils/firebase-config";
+import { useRouter } from "next/router";
 const Updateads = () => {
   const [logo, setLogo] = useState();
   const [image, setImage] = useState();
   const [title, setTitle] = useState();
   const [address, setAddress] = useState();
   const [details, setDetails] = useState();
+  const [isClick, setIsClick] = useState(false);
 
+  const router = useRouter();
   const handleSubmit = async () => {
     console.log("onSubmit");
+    setIsClick(true);
     const storageRef = getStorage(app);
     const imageURLs = await uploadBytes(
       ref(storageRef, `Post/Image/'${Date.now()}-${image.name}`),
@@ -42,12 +46,7 @@ const Updateads = () => {
       image: downloadImageURLs,
     };
     await addDoc(collection(db, "Ads"), data).then(() => {
-      alert("Success");
-      setTitle("");
-      setDetails("");
-      setAddress("");
-      setImage();
-      setLogo();
+      window.location.reload(true);
     });
   };
 
@@ -110,8 +109,11 @@ const Updateads = () => {
             }}
           />
           <button
-            className="w-[150px] h-[40px] rounded-md bg-green-500 text-white transition-[1s] hover:scale-[1.02]"
+            className={`w-[150px] h-[40px] rounded-md bg-green-500 text-white transition-[1s] hover:scale-[1.02] ${
+              isClick && "bg-gray-500"
+            }`}
             onClick={() => handleSubmit()}
+            disabled={isClick}
           >
             Post
           </button>

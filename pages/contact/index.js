@@ -3,7 +3,6 @@ import React from "react";
 import {
   AiFillFacebook,
   AiFillInstagram,
-  AiFillTwitterCircle,
   AiFillLinkedin,
 } from "react-icons/ai";
 
@@ -31,7 +30,6 @@ const index = () => {
           <div className="">abc 124 north east absc thsh</div>
           <div className="w-[50%] h-[10%] flex items-center justify-around text-[30px] text-blue-800 cursor-pointer">
             <AiFillInstagram />
-            <AiFillTwitterCircle />
             <AiFillFacebook />
             <AiFillLinkedin />
           </div>

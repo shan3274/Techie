@@ -16,9 +16,9 @@ const Successful = () => {
         </div>
         <h1 className="text-[60px] text-green-600">Successfull</h1>
         <p className="text-[20px] text-blue-500">
-          Your request is successfully sent to our server.
+          Your request has been successfully sent to approver for approval.
         </p>
-        <p className="text-[20px] text-blue-500">Please check your email</p>
+        <p className="text-[20px] text-blue-500">Once they approve you will receive conformation on your registered email</p>
         <button
           className="border py-2 px-10 rounded-full text-white bg-green-500 transition-[1s] hover:scale-[1.05]"
           onClick={() => {

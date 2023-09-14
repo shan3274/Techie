@@ -61,8 +61,7 @@ const Form = () => {
 
   return (
     <>
-      <Header />
-      <div className="w-full min-h-screen flex flex-col items-center justify-center relative top-[100px] gap-5 pt-10">
+      <div className="w-full min-h-screen flex flex-col items-center justify-center relative gap-5 ">
         <label className="text-[40px] text-blue-950 font-[600]">Services</label>
         {/* type */}
         <select
@@ -71,7 +70,7 @@ const Form = () => {
           className="w-[30%] h-[40px] border border-black rounded-md pl-2"
           onChange={(e) => setType(e.target.value)}
         >
-          <option value="">Select</option>
+          <option value="">Name of services</option>
           <option value="Expert Civil Services">Expert Civil Services</option>
           <option value="Expert Mechanical Services">
             Expert Mechanical Services
@@ -94,19 +93,19 @@ const Form = () => {
         </select>
         <textarea
           className="w-[30%] h-[100px] border border-black rounded-md pl-2 pt-2 resize-none"
-          placeholder="Details"
+          placeholder="Details of Services"
           onChange={(e) => setDetails(e.target.value)}
         />
         <input
           type="text"
           className="w-[30%] h-[40px] border border-black rounded-md pl-2 "
-          placeholder="Major Technical Services Work"
+          placeholder="Major Work executed"
           onChange={(e) => setWork(e.target.value)}
         />
         <input
           type="text"
           className="w-[30%] h-[40px] border border-black rounded-md pl-2"
-          placeholder="Value / Price of Major work"
+          placeholder="Value / Price of Major work executed"
           onChange={(e) => setValue(e.target.value)}
         />
         <div className="w-[100%] flex items-center justify-center">
@@ -116,7 +115,7 @@ const Form = () => {
             className="w-[20%] h-[50px] flex items-center justify-center text-white rounded-md bg-yellow-500 cursor-pointer"
             title="Upload Unpriced PO copy or Company Profile or Catalogue"
           >
-            Upload +
+            Catalogue +
           </label>
           <input
             type="file"
@@ -143,6 +142,7 @@ const Form = () => {
             onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
+        {image != null && <div className="text-blue-500">File Selected</div>}
         <button
           className="w-[15%] h-[50px] bg-green-500 text-white rounded-md transition-[1s] hover:scale-[1.02]"
           onClick={() => handleSubmit()}
