@@ -72,6 +72,7 @@ const Signup = () => {
         pin: pin,
         country: country,
         type: type,
+        password: password,
         countryCode: countryCode,
         landlineCode: landlineCode,
         approve: "false",
