@@ -120,7 +120,7 @@ const Signup = () => {
     <>
       <Header />
       {user.length > 0 ? (
-        <div className="w-full h-screen flex items-center justify-center flex-col relative">
+        <div className="w-full h-[120vh] flex items-center justify-center flex-col relative">
           <div className="absolute top-[120px] lg:top-[100px] text-[30px] font-[600] text-blue-950">
             Sign up
           </div>
@@ -129,7 +129,7 @@ const Signup = () => {
               <input
                 type="text"
                 placeholder="User ID"
-                className={`w-[50%] h-[40px] border border-black rounded-md pl-5 ${
+                className={`w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5 ${
                   userNameError != "" && "border-red-500 text-red-500"
                 } `}
                 onMouseOut={() => {
@@ -148,14 +148,14 @@ const Signup = () => {
               <input
                 type="text"
                 placeholder="Contact person name"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setConatactPersonName(event.target.value)}
               />
-              <div className="w-[50%] h-[40px] flex gap-3">
+              <div className="w-[50%] lg:w-[40%] lg:h-[30px] h-[40px] flex gap-3">
                 <select
                   name=""
                   id=""
-                  className="w-[20%] h-[40px] border border-black rounded-md pl-1"
+                  className="w-[30%] lg:text-[11px] h-[40px] lg:h-[30px] border border-black rounded-md pl-1"
                   onChange={(event) => setCountryCode(event.target.value)}
                 >
                   <option value="+91">+91</option>
@@ -166,15 +166,15 @@ const Signup = () => {
                 <input
                   type="text"
                   placeholder="Phone"
-                  className="w-[80%] h-[40px] border border-black rounded-md pl-5"
+                  className="w-[70%] h-[40px] lg:h-[30px] lg:text-[13px] border border-black rounded-md pl-5"
                   onChange={(event) => setPhone(event.target.value)}
                 />
               </div>
-              <div className="w-[50%] h-[40px] flex gap-3">
+              <div className="w-[50%] lg:w-[40%] lg:h-[30px] h-[40px] flex gap-3">
                 <select
                   name=""
                   id=""
-                  className="w-[20%] h-[40px] border border-black rounded-md pl-1"
+                  className="w-[30%] lg:text-[11px] h-[40px] lg:h-[30px] border border-black rounded-md pl-1"
                   onChange={(event) => setLandlineCode(event.target.value)}
                 >
                   <option value="+91">+91</option>
@@ -185,14 +185,14 @@ const Signup = () => {
                 <input
                   type="text"
                   placeholder="Landline"
-                  className="w-[80%] h-[40px] border border-black rounded-md pl-5"
+                  className="w-[70%] h-[40px] lg:h-[30px] lg:text-[13px] border border-black rounded-md pl-5"
                   onChange={(event) => setLandline(event.target.value)}
                 />
               </div>
               <input
                 type="email"
                 placeholder="Primary email"
-                className={`w-[50%] h-[40px] border border-black rounded-md pl-5 ${
+                className={`w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5 ${
                   emailError != "" && "border-red-500 text-red-500"
                 } `}
                 onMouseOut={() => {
@@ -210,19 +210,19 @@ const Signup = () => {
               <input
                 type="email"
                 placeholder="Secondary email"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setSecondaryEmail(event.target.value)}
               />
               <input
                 type="text"
                 placeholder="Company website"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setWebsite(event.target.value)}
               />
               <input
                 type="text"
                 placeholder="Comapny name"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setComapanyName(event.target.value)}
               />
             </div>
@@ -231,31 +231,31 @@ const Signup = () => {
               <input
                 type="text"
                 placeholder="Landmark"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setLandmark(event.target.value)}
               />
               <input
                 type="text"
                 placeholder="City"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setCity(event.target.value)}
               />
               <input
                 type="text"
                 placeholder="Pin"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setPin(event.target.value)}
               />
               <input
                 type="text"
                 placeholder="Country"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setCountry(event.target.value)}
               />
               <select
                 name=""
                 id=""
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setType(event.target.value)}
               >
                 <option value="">Deals in</option>
@@ -272,13 +272,13 @@ const Signup = () => {
               <input
                 type="text"
                 placeholder="Gstin"
-                className="w-[50%] h-[40px] border border-black rounded-md pl-5"
+                className="w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5"
                 onChange={(event) => setGstin(event.target.value)}
               />
               <input
                 type="password"
                 placeholder="Password"
-                className={`w-[50%] h-[40px] border border-black rounded-md pl-5 ${
+                className={`w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5 ${
                   passwordError != "" && "border-red-500 text-red-500"
                 } `}
                 onChange={(event) => setPassword(event.target.value)}
@@ -286,7 +286,7 @@ const Signup = () => {
               <input
                 type="password"
                 placeholder="Verify password"
-                className={`w-[50%] h-[40px] border border-black rounded-md pl-5 ${
+                className={`w-[50%] lg:w-[40%] lg:h-[30px] lg:text-[13px] h-[40px] border border-black rounded-md pl-5 ${
                   passwordError != "" && "border-red-500 text-red-500"
                 } `}
                 onMouseOut={() => {
