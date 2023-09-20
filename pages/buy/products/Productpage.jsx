@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { db } from "@/src/utils/firebase-config";
@@ -23,6 +23,8 @@ const Productpage = () => {
   const { query } = useRouter();
   const [data, setData] = useState();
   const [similarProdcut, setSimilarProdcut] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState();
 
   useMemo(async () => {
     if (query.path) {
@@ -45,7 +47,25 @@ const Productpage = () => {
         });
       } catch (error) {}
     }
+
+    await getDocs(collection(db, "User")).then((response) => {
+      response.docs.map((data) => {
+        setUsers(
+          response.docs.map((data) => {
+            return { ...data.data(), id: data.id };
+          })
+        );
+      });
+    });
   }, [query]);
+  useEffect(() => {
+    users?.map((item) => {
+      if (item.email == data.sellerEmail) {
+        setUser(item);
+      }
+    });
+  }, [data]);
+  console.log(user);
 
   return (
     <>
@@ -68,10 +88,16 @@ const Productpage = () => {
                 />
               )}
               <div className="flex items-center justify-center w-[100%] gap-5">
-                <button className="w-[30%] h-[40px] bg-orange-500 text-white">
+                <button
+                  className="w-[30%] h-[40px] bg-gray-500 text-white"
+                  disabled={true}
+                >
                   <i class="ri-shopping-cart-fill"></i> Cart
                 </button>
-                <button className="w-[30%] h-[40px] bg-orange-400 text-white">
+                <button
+                  className="w-[30%] h-[40px] bg-gray-500 text-white"
+                  disabled={true}
+                >
                   <i class="ri-shopping-bag-2-line"></i> Buy
                 </button>
               </div>
@@ -84,28 +110,32 @@ const Productpage = () => {
               <div className="">{data?.productCode}</div>
               <div className="">{data?.category}</div>
               <div className="">{data?.type}</div>
-              <div className="">{data?.productDescription}</div>
-              <div className="">{data?.TypicalSpecification}</div>
-              <div className="text-[25px] text-black font-[500]">
-                Seller Information
+              <div className="w-[300px] h-[200px] overflow-scroll text-justify">
+                {data?.productDescription}
               </div>
-              <div className="">{data?.sellerName}</div>
-              <div className="">{data?.sellerEmail}</div>
+              <div className="w-[300px] h-[200px] overflow-scroll text-justify">
+                {data?.TypicalSpecification}
+              </div>
             </div>
-            <div className="w-[30%] h-[90%] flex flex-col gap-10 justify-center items-center pl-10 text-gray-500">
+            <div className="w-[30%] h-[90%] overflow-scroll flex flex-col gap-3 justify-start mt-10 items-center pl-10 text-gray-500">
+              <h1 className="text-[25px] text-black font-[500]">Catalogue</h1>
+              <Link
+                href={data?.documentURLs[0]}
+                className="bg-blue-500 text-white w-[150px] h-[40px] rounded-lg drop-shadow-md transition-[1s] hover:scale-[1.03] flex items-center justify-center"
+              >
+                Download
+              </Link>
+
               <h1 className="text-[25px] text-black font-[500]">
-                Extra details
+                Seller Information
               </h1>
-              <button className="bg-blue-500 text-white w-[150px] h-[40px] rounded-lg drop-shadow-md transition-[1s] hover:scale-[1.03]">
-                Catalog +
-              </button>
-              <p className="p-5 text-justify">
-                {" "}
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit
-                soluta quam placeat sequi reiciendis numquam modi maiores vero,
-                ratione ipsa fugit aliquid excepturi rem odit hic ex delectus
-                aperiam tenetur.
-              </p>
+              <div className="text-black">{user?.fullName}</div>
+              <div className="text-black">{user?.email}</div>
+              <div className="text-black">{user?.userName}</div>
+              <div className="text-black">{user?.website}</div>
+              <div className="text-black">
+                {user?.countryCode}-{user?.phone}
+              </div>
             </div>
           </div>
 

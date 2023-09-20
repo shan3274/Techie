@@ -6,11 +6,12 @@ const Successful = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gray-400">
       <div className="w-[80%] h-[80%] bg-white border rounded-md drop-shadow-lg relative flex items-center justify-around flex-col">
-        <BiArrowBack
-          className="absolute top-3 left-3 cursor-pointer"
-          size={20}
+        <div
+          className="absolute bottom-24 xl:bottom-5 cursor-pointer w-[150px] h-[40px] flex items-center justify-center bg-green-500 rounded-full text-white"
           onClick={() => router.back()}
-        />
+        >
+          Add more
+        </div>
 
         <div className="text-[40px] text-green-500">Successfully</div>
         <div className="text-[25px] text-gray-600 text-center">
