@@ -46,6 +46,7 @@ const Account = () => {
                 return (
                   <div
                     className=" bg-white rounded-lg drop-shadow-xl border flex items-center justify-center h-[100px] cursor-pointer transition-[1s] hover:scale-[1.05]"
+                    key={data.id}
                     onClick={() => {
                       setApproveModal(true);
                       setSingleUser(data);
