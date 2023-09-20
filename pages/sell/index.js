@@ -52,7 +52,6 @@ const index = () => {
       setLoader(true);
       const storageRef = getStorage();
       let imageURLs = "";
-      
 
       for (const image of img) {
         imageURLs = await uploadBytes(
@@ -154,7 +153,7 @@ const index = () => {
             {img.length < 2 ? (
               <div className="pt-2 text-gray-600">
                 {img.length == 1 ? (
-                  <div className="">{img.length} image seleted</div>
+                  <div className="text-green-500">{img[0].name} selected</div>
                 ) : (
                   <div className="">
                     {img.length == 0 && (
@@ -189,7 +188,7 @@ const index = () => {
             {doc.length < 2 ? (
               <div className="pt-7 text-gray-600">
                 {doc.length == 1 ? (
-                  <div className="">{doc.length} documents seleted</div>
+                  <div className="text-green-500">{doc[0].name} seleted</div>
                 ) : (
                   <div className="">
                     {doc.length == 0 && (
