@@ -121,7 +121,7 @@ const Signup = () => {
     <>
       <Header />
       {user.length > 0 ? (
-        <div className="w-full h-[120vh] xl:h-[100vh] flex items-center justify-center flex-col relative">
+        <div className="w-full h-[140vh] xl:h-[100vh] flex items-center justify-center flex-col relative">
           <div className="absolute top-[120px] lg:top-[100px] text-[30px] font-[600] text-blue-950">
             Sign up
           </div>
@@ -159,6 +159,7 @@ const Signup = () => {
                   className="w-[30%] lg:text-[11px] h-[40px] lg:h-[30px] border border-black rounded-md pl-1"
                   onChange={(event) => setCountryCode(event.target.value)}
                 >
+                  <option value=""></option>
                   <option value="+91">+91</option>
                   <option value="+91">+92</option>
                   <option value="+91">+93</option>
@@ -178,6 +179,7 @@ const Signup = () => {
                   className="w-[30%] lg:text-[11px] h-[40px] lg:h-[30px] border border-black rounded-md pl-1"
                   onChange={(event) => setLandlineCode(event.target.value)}
                 >
+                  <option value=""></option>
                   <option value="+91">+91</option>
                   <option value="+91">+92</option>
                   <option value="+91">+93</option>
