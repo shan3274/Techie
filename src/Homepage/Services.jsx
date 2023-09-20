@@ -41,7 +41,7 @@ const Services = () => {
         <div className="w-[80%] h-[30%] bg-white drop-shadow-md border border-orange-500 text-orange-500 rounded-md cursor-pointer flex items-center justify-center">
           Procedure / Step to buy & sell on this web site
         </div>
-        <div className="w-[80%] h-[30%] bg-white drop-shadow-md border border-orange-500 text-orange-500 rounded-md cursor-pointer flex items-center justify-center">
+        <div className="w-[80%] h-[40%] p-10 pt-20 bg-white drop-shadow-md border border-orange-500 text-orange-500 rounded-md cursor-pointer flex items-center justify-center overflow-scroll">
           {dis}
         </div>
       </div>
