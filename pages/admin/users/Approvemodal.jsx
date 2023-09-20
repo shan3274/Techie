@@ -31,36 +31,29 @@ const Approvemodal = ({ closeModal, user }) => {
         >
           X
         </div>
-        <div className="w-[100%] h-[10%] flex items-center justify-center absolute top-10 text-[30px] font-[500]">
+        <div className="w-[100%] h-[10%] flex items-center justify-center absolute  text-[20px] font-[700] top-10 xl:text-[30px]">
           {user?.fullName}
         </div>
-        <div className="w-[70%] h-[100%] flex items-center justify-center text-[17px]">
-          <div className="w-[30%] h-[80%] flex flex-col justify-center gap-5">
+        <div className="w-[70%] h-[100%] flex items-center justify-center text-[15px] xl:text-[17px]">
+          <div className="w-[30%] h-[80%] flex flex-col justify-center xl:gap-5 gap-2">
             <div className="">Username</div>
-            <div className="">User ID</div>
             <div className="">Email</div>
             <div className="">Company Name</div>
-            <div className="">GSTIN</div>
-            <div className="">Address</div>
+
+            <div className="">Company Address</div>
             <div className="">Industry Type</div>
-            <div className="">Nature</div>
-            <div className="">Application</div>
             <div className="">
               {user?.approve == "true" && (
                 <div className="">Number of products</div>
               )}
             </div>
           </div>
-          <div className="w-[30%] h-[80%] flex flex-col justify-center text-gray-600 gap-5">
+          <div className="w-[30%] h-[80%] flex flex-col justify-center text-gray-600 gap-2 xl:gap-5">
             <div className="">{user?.userName}</div>
-            <div className="">{user?.id}</div>
             <div className="">{user?.email}</div>
             <div className="">{user?.companyName}</div>
-            <div className="">{user?.gstin}</div>
-            <div className="">{user?.address}</div>
-            <div className="">{user?.industryType}</div>
-            <div className="">{user?.nature}</div>
-            <div className="">{user?.application}</div>
+            <div className="">{user?.city}</div>
+            <div className="">{user?.type}</div>
             <div className="">
               {user?.approve == "true" && (
                 <div className="">{userData?.length}</div>
@@ -69,7 +62,7 @@ const Approvemodal = ({ closeModal, user }) => {
           </div>
         </div>
         {user?.approve == "false" ? (
-          <div className="absolute bottom-0 w-[100%] h-[10%] flex items-center justify-center gap-5">
+          <div className="absolute bottom-10 w-[100%] h-[10%] flex items-center justify-center gap-5">
             <button
               className={
                 approve == true
