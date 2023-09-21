@@ -39,12 +39,10 @@ const Search = ({ result, closeModal }) => {
 
     setFilterItem(results);
     setFilterItem2(results2);
-    console.log("rendring", results);
   };
   useMemo(() => {
     search(value);
   }, [value]);
-  console.log("result", result);
 
   return (
     <div className="w-full h-screen flex items-center justify-center fixed top-0 backdrop-blur-[1px] z-[1000]">
@@ -68,7 +66,7 @@ const Search = ({ result, closeModal }) => {
           <Link
             href={{
               pathname: "/buy/Searchresult",
-              query: { name: "test", path: "/buy/Searchresult" },
+              query: { name: "test", path: "/buy/Searchresult" ,value: value},
             }}
             onClick={() => closeModal(false)}
           >
@@ -116,7 +114,11 @@ const Search = ({ result, closeModal }) => {
                       className="w-[100%] h-[40px] border-b-[.5px] border-black flex items-center justify-start pl-10  "
                       href={{
                         pathname: "/buy/Searchresult",
-                        query: { name: "test", path: res.path },
+                        query: {
+                          name: "test",
+
+                          value: res.name,
+                        },
                       }}
                       onClick={() => closeModal(false)}
                     >

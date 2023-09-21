@@ -26,6 +26,8 @@ const Productpage = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState();
 
+  const [discription, setDiscription] = useState(false);
+
   useMemo(async () => {
     if (query.path) {
       try {
@@ -49,150 +51,197 @@ const Productpage = () => {
     }
 
     await getDocs(collection(db, "User")).then((response) => {
-      response.docs.map((data) => {
-        setUsers(
-          response.docs.map((data) => {
-            return { ...data.data(), id: data.id };
-          })
-        );
-      });
+      setUsers(
+        response.docs.map((data) => {
+          return { ...data.data(), id: data.id };
+        })
+      );
     });
   }, [query]);
-  useEffect(() => {
-    users?.map((item) => {
-      if (item.email == data.sellerEmail) {
-        setUser(item);
-      }
-    });
-  }, [data]);
-  console.log(user);
-
   return (
     <>
       {data ? (
         <>
           <Header />
-
-          <div className="w-full h-screen flex items-center justify-center  mt-[2.5%]">
-            <div className="w-[45%] h-[90%]  flex items-center justify-center flex-col gap-10">
-              {data.imageUrls ? (
-                <img
-                  src={data?.imageUrls[0]}
-                  className="w-[70%] p-10 bg-white drop-shadow"
-                />
-              ) : (
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1200px-No-Image-Placeholder.svg.png"
-                  alt="loading"
-                  className="h-[180px]"
-                />
-              )}
-              <div className="flex items-center justify-center w-[100%] gap-5">
-                <button
-                  className="w-[30%] h-[40px] bg-gray-500 text-white"
-                  disabled={true}
-                >
-                  <i class="ri-shopping-cart-fill"></i> Cart
-                </button>
-                <button
-                  className="w-[30%] h-[40px] bg-gray-500 text-white"
-                  disabled={true}
-                >
-                  <i class="ri-shopping-bag-2-line"></i> Buy
-                </button>
-              </div>
-            </div>
-            <div className="w-[25%] h-[90%] flex flex-col gap-5 justify-center items-start pl-10 text-gray-500">
-              <div className="text-[25px] text-black font-[500]">
-                Basic details
-              </div>
-              <div className="">{data?.productName}</div>
-              <div className="">{data?.productCode}</div>
-              <div className="">{data?.category}</div>
-              <div className="">{data?.type}</div>
-              <div className="w-[300px] h-[200px] overflow-scroll text-justify">
-                {data?.productDescription}
-              </div>
-              <div className="w-[300px] h-[200px] overflow-scroll text-justify">
-                {data?.TypicalSpecification}
-              </div>
-            </div>
-            <div className="w-[30%] h-[90%] overflow-scroll flex flex-col gap-3 justify-start mt-10 items-center pl-10 text-gray-500">
-              <h1 className="text-[25px] text-black font-[500]">Catalogue</h1>
-              <Link
-                href={data?.documentURLs[0]}
-                className="bg-blue-500 text-white w-[150px] h-[40px] rounded-lg drop-shadow-md transition-[1s] hover:scale-[1.03] flex items-center justify-center"
-              >
-                Download
-              </Link>
-
-              <h1 className="text-[25px] text-black font-[500]">
-                Seller Information
-              </h1>
-              <div className="text-black">{user?.fullName}</div>
-              <div className="text-black">{user?.email}</div>
-              <div className="text-black">{user?.userName}</div>
-              <div className="text-black">{user?.website}</div>
-              <div className="text-black">
-                {user?.countryCode}-{user?.phone}
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full flex items-center justify-center my-10 text-[50px] text-black font-[600]">
-            Similar<span className="text-gray-600"> products</span>
-          </div>
-
-          <div className="w-full h-[400px]  ">
-            <Swiper
-              slidesPerView={4}
-              spaceBetween={30}
-              freeMode={true}
-              modules={[FreeMode]}
-              className="mySwiper"
-            >
-              {similarProdcut.map((item) => {
-                if (query.productId != item.id) {
-                  return (
-                    <SwiperSlide>
-                      <Link
-                        href={{
-                          pathname: "/buy/products/Productpage",
-                          query: {
-                            path: query.path,
-                            similarproduct: query.path,
-                            productId: item.id,
-                          },
-                        }}
-                        className="w-[300px] h-[400px] mx-10 flex items-center justify-center relative flex-col gap-10 cursor-pointer border"
+          <div className="w-full min-h-[110vh] relative top-20 flex items-start flex-col bg-slate-200 pt-2 gap-2">
+            <div className="w-full h-screen flex items-start justify-center relative gap-2 pl-1">
+              <div className="w-[70%] h-screen  bg-white drop-shadow-lg flex items-start pt-5 justify-center relative">
+                <div className="w-[50%] h-[100%] flex items-start justify-center pt-10">
+                  <img
+                    src={data?.imageUrls[0]}
+                    alt="no imgae"
+                    className="w-[80%] h-[50%]"
+                  />
+                </div>
+                <div className="w-[50%] h-[100%] flex items-start justify-start gap-5 flex-col pt-10 pl-10">
+                  <div className="text-[25px] font-[600]">
+                    {data?.productName}
+                  </div>
+                  <div className="text-[15px] text-gray-500 ">
+                    by{" "}
+                    <span className="text-orange-500">{data?.sellerName}</span>
+                  </div>
+                  <div className="w-[100%] border-t"></div>
+                  <div className="text-[25px] font-[600]">About</div>
+                  <div className="w-[100%] flex items-center justify-center">
+                    <div className="w-[50%] flex flex-col gap-2 text-[15px] text-gray-500">
+                      <div className="">Product code :</div>
+                      <div className="">Type :</div>
+                      <div className="">Company :</div>
+                      <div className="">Website :</div>
+                    </div>
+                    <div className="w-[50%] flex flex-col gap-2 text-[15px] text-gray-500">
+                      <div className="">{data?.productCode}</div>
+                      <div className="">{data?.type}</div>
+                      {users?.map((user) => {
+                        if (data?.sellerEmail == user.email) {
+                          return (
+                            <>
+                              <div className="">{user?.companyName}</div>
+                              <Link
+                                href={`https://${user?.website}`}
+                                className="hover:text-blue-500 hover:underline"
+                              >
+                                {user?.website}
+                              </Link>
+                            </>
+                          );
+                        }
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute bottom-0 w-[100%] h-[40%] border-t">
+                  <div className="w-[100%] h-[100%] relative flex items-center justify-center">
+                    <div className="absolute top-0 left-0">
+                      <button
+                        className={`px-3 py1 border border-t-transparent ${
+                          !discription && "bg-gray-100"
+                        }`}
+                        onClick={() => setDiscription(false)}
                       >
-                        <img
-                          src={item.imageUrls[0]}
-                          style={{
-                            width: "100%",
-                            height: "60%",
-                            zIndex: "1000",
-                            position: "absolute",
-                            top: "0",
-                          }}
-                        />
-                        <div className="w-full flex flex-col items-center justify-center gap-3 absolute top-[68%]">
-                          <p className="font-[500] text-[23px] ">
-                            {item.productName}
-                          </p>
-                          <p className="text-gray-500">{item.type}</p>
+                        Description
+                      </button>
+                      <button
+                        className={`px-3 py1 border border-t-transparent ${
+                          discription && "bg-gray-100"
+                        }`}
+                        onClick={() => setDiscription(true)}
+                      >
+                        Typical Specification
+                      </button>
+                      {discription ? (
+                        <div className="w-[100%] h-[90%] text-justify p-10 text-[15px] text-gray-500 overflow-scroll">
+                          {data?.TypicalSpecification}
                         </div>
-                        <button className="absolute bottom-2 w-[70%] h-[40px] rounded-lg bg-black text-white">
-                          Buy now
-                        </button>
-                      </Link>
-                    </SwiperSlide>
+                      ) : (
+                        <div className="w-[100%] h-[90%] text-justify p-10 text-[15px] text-gray-500 overflow-scroll">
+                          {data?.productDescription}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[30%] h-screen sticky top-10 flex flex-col items-start justify-start gap-5">
+                <div className="w-[98%] h-[30%] bg-white flex items-center justify-start pt-10 flex-col gap-10">
+                  <div className="text-[25px] text-green-700">Catalogue</div>
+                  <div className="">Product catalogue here</div>
+                  <Link
+                    href={data?.documentURLs[0]}
+                    className="w-[150px] h-[40px] bg-green-500 text-white rounded-full flex items-center justify-center"
+                  >
+                    Download +
+                  </Link>
+                </div>
+                <div className="w-[98%] h-[3%] text-center text-[20px] text-orange-500 font-[700]">
+                  Seller details
+                </div>
+                <div className="w-[98%] h-[50%] bg-white flex flex-col gap-3 items-center justify-center">
+                  {users ? (
+                    <>
+                      {" "}
+                      {users.map((item) => {
+                        if (item.email == data.sellerEmail) {
+                          return (
+                            <>
+                              <div className="w-[100%] h-[90%] flex items-start justify-center text-[15px] text-gray-500 pl-10 pt-10">
+                                <div className="w-[30%] h-[100%] flex flex-col justify-start items-start gap-2">
+                                  <div className="">Full name :</div>
+                                  <div className="">Email :</div>
+                                  <div className="">Phone :</div>
+                                  <div className="">Landline :</div>
+                                  <div className="">Address :</div>
+                                  <div className="text-white">m</div>
+                                </div>
+                                <div className="w-[70%] h-[100%] flex flex-col justify-start items-start gap-2">
+                                  <div className="">{item.fullName}</div>
+                                  <div className="">{item.email}</div>
+                                  <div className="">
+                                    {item.countryCode}-{item.phone}
+                                  </div>
+                                  <div className="">
+                                    {item.landlineCode}-{item.landline}
+                                  </div>
+                                  <div className="">
+                                    {item.landmark},{item.city},
+                                  </div>
+                                  <div className="">
+                                    {item.country},{item.pin}
+                                  </div>
+                                </div>
+                              </div>
+                            </>
+                          );
+                        }
+                      })}
+                    </>
+                  ) : (
+                    <div className="w-[100%] h-[100%] flex items-center justify-center">
+                      Loading...
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="w-[69.5%] text-center text-[25px] font-[700] text-blue-500">
+              Recommended Products
+            </div>
+            <div className="w-[69.5%] h-[40vh] bg-white mb-10 drop-shadow-lg ml-1 grid grid-flow-col gap-5 overflow-scroll px-5 items-center">
+              {similarProdcut.map((items) => {
+                if (query.productId != items.id) {
+                  return (
+                    <Link
+                      href={{
+                        pathname: "/buy/products/Productpage",
+                        query: {
+                          path: "Products",
+                          similarproduct: "Products",
+                          productId: items.id,
+                        },
+                      }}
+                      className="w-[200px] h-[90%] border flex flex-col gap-2"
+                    >
+                      <img
+                        src={items?.imageUrls[0]}
+                        alt=""
+                        className="w-[100%] h-[50%]"
+                      />
+                      <h1 className="w-[100%] text-center text-[13px] px-5">
+                        {items?.productName}
+                      </h1>
+                      <div className="text-[15px] text-gray-500 w-[100%] h-[40px] flex items-center justify-center gap-2">
+                        by{" "}
+                        <span className="text-orange-500">
+                          {data?.sellerName}
+                        </span>
+                      </div>
+                    </Link>
                   );
                 }
               })}
-            </Swiper>
+            </div>
           </div>
-
           <Footer />
         </>
       ) : (

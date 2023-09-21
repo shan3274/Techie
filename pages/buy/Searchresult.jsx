@@ -9,11 +9,13 @@ const Searchresult = () => {
   const { query } = useRouter();
   const [data, setData] = useState([]);
   const [items, setItems] = useState(true);
+  const [filterItem, setFilterItem] = useState([]);
+
   const products = async () => {
     if (query.path != null) {
       try {
         setItems(true);
-        await getDocs(collection(db, query.path)).then((response) => {
+        await getDocs(collection(db, "Products")).then((response) => {
           setData(
             response.docs.map((data) => {
               return { ...data.data(), id: data.id };
@@ -26,26 +28,42 @@ const Searchresult = () => {
       }
     }
   };
+
+  const search = (value) => {
+    let results = [];
+
+    results = data?.filter((datas) => {
+      return datas?.productName?.toLowerCase().includes(value.toLowerCase());
+    });
+
+    setFilterItem(results);
+  };
+  useMemo(() => {
+    search(query.value);
+  }, [query.value, data]);
+
   useEffect(() => {
     products();
   }, [query]);
 
+  console.log(query.value);
+  console.log(data);
   return (
     <>
       <Header />
       <div className="w-full h-screen flex items-center justify-center mt-[5%]">
         <div className="w-[20%] h-[100%] border-r"></div>
         <div className="w-[80%] h-[100%]  overflow-y-scroll ">
-          {items ? (
+          {filterItem.length > 0 ? (
             <>
-              {data?.map((item) => {
+              {filterItem?.map((item) => {
                 return (
                   <Link
                     href={{
                       pathname: "/buy/products/Productpage",
                       query: {
-                        path: query.path,
-                        similarproduct: query.path,
+                        path: "Products",
+                        similarproduct: "Products",
                         productId: item.id,
                       },
                     }}
