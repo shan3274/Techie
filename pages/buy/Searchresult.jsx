@@ -11,6 +11,10 @@ const Searchresult = () => {
   const [items, setItems] = useState(true);
   const [filterItem, setFilterItem] = useState([]);
 
+  const [checkeds, setChecked] = useState([]);
+
+  const [companyName, setCompanyName] = useState([]);
+
   const products = async () => {
     if (query.path != null) {
       try {
@@ -46,68 +50,129 @@ const Searchresult = () => {
     products();
   }, [query]);
 
-  console.log(query.value);
-  console.log(data);
+  console.log(companyName);
   return (
     <>
       <Header />
       <div className="w-full h-screen flex items-center justify-center mt-[5%]">
-        <div className="w-[20%] h-[100%] border-r"></div>
-        <div className="w-[80%] h-[100%]  overflow-y-scroll ">
+        <div className="w-[20%] h-[100%] border-r pt-5 pl-5">
+          {filterItem.length > 0 && (
+            <>
+              {filterItem?.map((item) => {
+                return (
+                  <div className="flex gap-2">
+                    <input
+                      type="checkbox"
+                      value={item.id}
+                      id={item.id}
+                      onChange={(e) => {
+                        let flag = false;
+                        checkeds.map((ch) => {
+                          if (ch.id == item.id) {
+                            flag = true;
+                          }
+                        });
+                        if (flag == false) {
+                          setChecked([
+                            ...checkeds,
+                            {
+                              value: document.getElementById(item.id).checked,
+                              id: item.id,
+                              name: item.sellerName,
+                            },
+                          ]);
+                        }
+                        if (flag) {
+                          checkeds.map((ch) => {
+                            if (ch.id == item.id) {
+                              setChecked(
+                                checkeds.filter((data) => data.id != ch.id)
+                              );
+                            }
+                          });
+                        }
+                      }}
+                    />{" "}
+                    {item?.sellerName}
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </div>
+        <div className="w-[80%] h-[100%]  grid grid-cols-4 gap-3 p-10 ">
           {filterItem.length > 0 ? (
             <>
               {filterItem?.map((item) => {
                 return (
-                  <Link
-                    href={{
-                      pathname: "/buy/products/Productpage",
-                      query: {
-                        path: "Products",
-                        similarproduct: "Products",
-                        productId: item.id,
-                      },
-                    }}
-                    className="w-[100%] h-[200px] flex items-center justify-around border-b"
-                  >
-                    <div className="w-[30%] h-[100%] flex items-center justify-center ">
-                      {item?.imageUrls ? (
-                        <img src={item?.imageUrls[0]} className="h-[180px]" />
-                      ) : (
+                  <>
+                    {checkeds.length > 0 ? (
+                      <>
+                        {checkeds.map((res) => {
+                          if (res.value && res.name == item.sellerName) {
+                            return (
+                              <>
+                                <Link
+                                  href={{
+                                    pathname: "/buy/products/Productpage",
+                                    query: {
+                                      path: "Products",
+                                      similarproduct: "Products",
+                                      productId: item.id,
+                                    },
+                                  }}
+                                  className="w-[300px] h-[400px] flex flex-col items-center justify-around border"
+                                >
+                                  <img
+                                    src={item?.imageUrls[0]}
+                                    alt="no image"
+                                    className="w-[80%]"
+                                  />
+                                  <div className="flex gap-2 text-gray-500">
+                                    <span className="text-orange-500">by</span>{" "}
+                                    {item.sellerName}
+                                  </div>
+                                  <div className="w-[80%] text-center flex items-center justify-center">
+                                    {item.productName}
+                                  </div>
+                                </Link>
+                              </>
+                            );
+                          }
+                        })}
+                      </>
+                    ) : (
+                      <Link
+                        href={{
+                          pathname: "/buy/products/Productpage",
+                          query: {
+                            path: "Products",
+                            similarproduct: "Products",
+                            productId: item.id,
+                          },
+                        }}
+                        className="w-[300px] h-[400px] flex flex-col items-center justify-around border"
+                      >
                         <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1200px-No-Image-Placeholder.svg.png"
-                          alt="loading"
-                          className="h-[180px]"
+                          src={item?.imageUrls[0]}
+                          alt="no image"
+                          className="w-[80%]"
                         />
-                      )}
-                    </div>
-                    <div className="w-[40%] h-[100%] flex flex-col gap-2 justify-center items-start">
-                      <div className="text-[20px] font-[500]">
-                        {item?.productName}
-                      </div>
-                      <div className="text-[15px] text-gray-500">
-                        {item?.productCode}
-                      </div>
-                      <div className="text-[15px] text-gray-500">
-                        {item?.category}
-                      </div>
-                      <div className="text-[15px] text-gray-500">
-                        {item?.type}
-                      </div>
-                    </div>
-                    <div className="w-[30%] h-[100%] flex flex-col gap-2 justify-center items-start">
-                      <div className="text-[15px] text-blue-500">
-                        {item?.sellerName}
-                      </div>
-                      <div className="text-[15px] text-blue-500">
-                        {item?.sellerEmail}
-                      </div>
-                    </div>
-                  </Link>
+                        <div className="flex gap-2 text-gray-500">
+                          <span className="text-orange-500">by</span>{" "}
+                          {item.sellerName}
+                        </div>
+                        <div className="w-[80%] text-center flex items-center justify-center">
+                          {item.productName}
+                        </div>
+                      </Link>
+                    )}
+                  </>
                 );
               })}
             </>
           ) : (
-            <div className="w-[100%] h-[100%] flex flex-col items-center gap-3 justify-start">
+            <div className="w-full h-screen flex flex-col items-center gap-3 justify-center absolute left-0 top-0">
               <i class="ri-emotion-sad-line text-[150px]"></i>
               <h1 className="text-[30px] text-gray-600">
                 Sorry product not found
